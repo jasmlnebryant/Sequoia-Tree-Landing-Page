@@ -46,7 +46,7 @@ Practical information (fees, hours, seasonal access, trail and accessibility det
 ## Tools
 
 - **Figma** — research through high-fidelity design
-- **Claude (Anthropic)** — AI collaborator for visual direction explorations, building screens in Figma, content research and, next, front-end code
+- **Claude (Anthropic)** — AI collaborator for visual direction explorations, building screens in Figma, content research and front-end code
 
 ## How I worked with AI
 
