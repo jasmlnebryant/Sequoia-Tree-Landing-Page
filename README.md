@@ -2,7 +2,7 @@
 
 A mobile-first visitor website for the giant sequoia groves of **Sequoia & Kings Canyon National Parks**, helping visitors plan a trip, compare Giant Forest and Grant Grove, find accessible routes, and learn why these trees matter.
 
-> **Status:** Design phase — high-fidelity screens are complete in Figma. The coded landing page is next.
+> **Status:** The mobile-first landing page is built (HTML, CSS, vanilla JS). Hi-fi designs for the remaining pages live in Figma.
 
 ## The problem
 
@@ -54,7 +54,31 @@ I directed the design decisions; Claude generated options and did the heavy lift
 
 ## Next steps
 
-- [ ] Build the mobile landing page in HTML/CSS from the hi-fi Home screen
-- [ ] Make it responsive up to the desktop layout
-- [ ] Add the photo and grove carousels
+- [x] Build the mobile landing page in HTML/CSS from the hi-fi Home screen
+- [x] Make it responsive up to the desktop layout
+- [x] Add the photo and grove carousels
+- [ ] Add the four photos to `assets/img/` (see the note there)
+- [ ] Publish with GitHub Pages
+- [ ] Build the inner pages (Plan Your Visit, groves, accessibility)
 - [ ] Recheck all park information against NPS before publishing
+
+## Run it locally
+
+No build step needed. Open `index.html` in a browser, or serve the folder:
+
+```
+python3 -m http.server
+```
+
+then visit http://localhost:8000.
+
+## Project structure
+
+```
+index.html                 Landing page markup (semantic HTML + inline icon sprite)
+css/styles.css             Design tokens, mobile-first styles, desktop layout at 1024px
+js/main.js                 Mobile menu, hero carousel, grove carousel
+assets/textures/           Tree-ring SVG textures
+assets/img/                Photos
+scripts/generate-textures.mjs   Regenerates the ring textures (node scripts/generate-textures.mjs)
+```
