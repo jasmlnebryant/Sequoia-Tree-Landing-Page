@@ -1,0 +1,27 @@
+# --- Operating system clutter ---
+.DS_Store
+.AppleDouble
+Thumbs.db
+desktop.ini
+
+# --- Editors ---
+.vscode/
+.idea/
+*.swp
+
+# --- Secrets & environment variables (never commit these) ---
+.env
+.env.*
+!.env.example
+
+# --- Dependencies ---
+node_modules/
+
+# --- Build output ---
+dist/
+build/
+.cache/
+
+# --- Logs ---
+*.log
+npm-debug.log*
