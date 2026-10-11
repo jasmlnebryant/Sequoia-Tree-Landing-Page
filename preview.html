@@ -226,6 +226,19 @@
         if (!ready) caption.textContent += " · If the page stays blank, open preview.html from the project folder.";
       }, 6000);
 
+      // The site handles its own links, but if the frame ever navigates away
+      // (a second load event), put the home page back so the preview never nests.
+      const homeSrc = frame.getAttribute("src");
+      let loads = 0;
+      frame.addEventListener("load", () => {
+        loads += 1;
+        if (loads < 2) return;
+        loads = 0;
+        if (homeSrc) frame.src = homeSrc; else frame.srcdoc = frame.srcdoc;
+        layout();
+        caption.textContent += " · Reset to the home page";
+      });
+
       setMode(mode, false);
     })();
   </script>
