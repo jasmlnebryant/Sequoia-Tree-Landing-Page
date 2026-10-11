@@ -72,10 +72,15 @@ python3 -m http.server
 
 then visit http://localhost:8000.
 
+### Preview phone and desktop side by side
+
+Open `preview.html` to see the page inside a phone-sized or desktop-sized frame. Use the **Mobile / Desktop** buttons (or press **M** / **D**) to switch between the two layouts without resizing your window. Each frame scrolls independently.
+
 ## Project structure
 
 ```
 index.html                 Landing page markup (semantic HTML + inline icon sprite)
+preview.html               Mobile / Desktop preview toggle for reviewing the page
 css/styles.css             Design tokens, mobile-first styles, desktop layout at 1024px
 js/main.js                 Mobile menu, hero carousel, grove carousel
 assets/textures/           Tree-ring SVG textures

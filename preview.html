@@ -1,0 +1,232 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Sequoia Site Preview</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:wght@700&family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
+  <style>
+    /* Layout: a slim bark toolbar over a full-height stage; the site renders
+       inside a device frame that is scaled to fit whatever space is left. */
+    :root {
+      --bar: #3A2A1F;        /* toolbar, matches the site's bark */
+      --bar-ink: #F8F3EA;
+      --bar-muted: #C9B8A3;
+      --ground: #E2D9C9;     /* stage behind the device */
+      --ground-ink: #6B5848;
+      --bezel: #2B2018;      /* phone body */
+      --frame-line: rgba(58, 42, 31, 0.18);
+      --accent: #B5582F;     /* clay */
+      --seg-on: #F8F3EA;
+      --seg-on-ink: #3A2A1F;
+      --font-display: "Averia Serif Libre", Georgia, serif;
+      --font-ui: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root:not([data-theme="light"]) {
+        --bar: #241A13; --bar-ink: #F3EADC; --bar-muted: #A8977F;
+        --ground: #17110D; --ground-ink: #A8977F;
+        --bezel: #0E0A07; --frame-line: rgba(248, 243, 234, 0.14);
+        --accent: #D27A4F; --seg-on: #F3EADC; --seg-on-ink: #241A13;
+        color-scheme: dark;
+      }
+    }
+    :root[data-theme="dark"] {
+      --bar: #241A13; --bar-ink: #F3EADC; --bar-muted: #A8977F;
+      --ground: #17110D; --ground-ink: #A8977F;
+      --bezel: #0E0A07; --frame-line: rgba(248, 243, 234, 0.14);
+      --accent: #D27A4F; --seg-on: #F3EADC; --seg-on-ink: #241A13;
+      color-scheme: dark;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; }
+    html, body { height: 100%; }
+    body {
+      margin: 0; display: flex; flex-direction: column;
+      background: var(--ground); color: var(--ground-ink);
+      font-family: var(--font-ui); font-size: 14px;
+    }
+
+    /* ---------- Toolbar ---------- */
+    .bar {
+      display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px;
+      padding: 12px 16px; background: var(--bar); color: var(--bar-ink);
+    }
+    .bar__name { display: flex; flex-direction: column; gap: 2px; min-width: 0; margin-right: auto; }
+    .bar__title { font-family: var(--font-display); font-weight: 700; font-size: 17px; line-height: 1.1; }
+    .bar__sub { font-size: 12px; color: var(--bar-muted); }
+
+    .seg {
+      display: inline-flex; padding: 4px; gap: 4px; border-radius: 999px;
+      background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12);
+    }
+    .seg button {
+      display: inline-flex; align-items: center; gap: 8px;
+      border: 0; border-radius: 999px; padding: 8px 14px; cursor: pointer;
+      background: transparent; color: var(--bar-ink);
+      font: 600 14px/1 var(--font-ui);
+      transition: background-color 0.15s ease, color 0.15s ease;
+    }
+    .seg button:hover { background: rgba(255, 255, 255, 0.08); }
+    .seg button[aria-pressed="true"] { background: var(--seg-on); color: var(--seg-on-ink); }
+    .seg button:focus-visible, .bar a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+    .seg svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+    .seg__px { font-weight: 500; opacity: 0.6; font-variant-numeric: tabular-nums; }
+
+    .bar__meta { display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--bar-muted); }
+    .bar__meta kbd {
+      font: 600 11px/1 var(--font-ui); padding: 3px 6px; border-radius: 5px;
+      border: 1px solid rgba(255, 255, 255, 0.22); color: var(--bar-ink);
+    }
+    .bar a { color: var(--bar-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--accent); }
+
+    /* ---------- Stage ---------- */
+    .stage {
+      flex: 1; min-height: 0; overflow: hidden;
+      display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
+      padding: 20px 16px;
+    }
+    .device { position: relative; flex: none; }
+    .device iframe {
+      position: absolute; top: 0; left: 0; border: 0; display: block;
+      transform-origin: 0 0; background: #EDE5D7;
+    }
+    .device--mobile { border-radius: 46px; background: var(--bezel); box-shadow: 0 24px 60px rgba(20, 14, 10, 0.28); }
+    .device--mobile .screen { position: absolute; overflow: hidden; border-radius: 34px; }
+    .device--desktop { border-radius: 14px; box-shadow: 0 18px 50px rgba(20, 14, 10, 0.2), 0 0 0 1px var(--frame-line); }
+    .device--desktop .screen { position: absolute; inset: 0; overflow: hidden; border-radius: 14px; }
+
+    .caption { font-size: 12px; font-variant-numeric: tabular-nums; color: var(--ground-ink); }
+    .notice {
+      max-width: 52ch; padding: 16px 18px; border-radius: 14px; line-height: 1.5;
+      background: var(--bar); color: var(--bar-ink);
+    }
+
+    @media (max-width: 640px) {
+      .bar__meta .hint { display: none; }
+      .seg__px { display: none; }
+    }
+    @media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+  </style>
+</head>
+<body>
+  <header class="bar">
+    <div class="bar__name">
+      <span class="bar__title">Visit the Giant Sequoias</span>
+      <span class="bar__sub">Landing page preview</span>
+    </div>
+
+    <div class="seg" role="group" aria-label="Preview size">
+      <button type="button" id="btn-mobile" data-mode="mobile" aria-pressed="true">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>
+        Mobile <span class="seg__px">390</span>
+      </button>
+      <button type="button" id="btn-desktop" data-mode="desktop" aria-pressed="false">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><rect x="2.5" y="4" width="19" height="13" rx="2"/><path d="M8.5 20.5h7M12 17v3.5"/></svg>
+        Desktop <span class="seg__px">1280</span>
+      </button>
+    </div>
+
+    <div class="bar__meta">
+      <span class="hint">Press <kbd>M</kbd> or <kbd>D</kbd></span>
+      <a href="index.html" target="_blank" rel="noopener">Open full page</a>
+    </div>
+  </header>
+
+  <main class="stage" id="stage">
+    <div class="device device--mobile" id="device">
+      <div class="screen" id="screen">
+        <iframe id="site" src="index.html" title="Visit the Giant Sequoias landing page"></iframe>
+      </div>
+    </div>
+    <p class="caption" id="caption" aria-live="polite"></p>
+  </main>
+
+  <script>
+    (() => {
+      const MODES = {
+        mobile:  { w: 390,  h: 844, label: "Phone · 390 × 844" },
+        desktop: { w: 1280, h: 800, label: "Desktop · 1280 wide" },
+      };
+      const BEZEL = 12;          // phone border width at 100%
+      const CAPTION_SPACE = 28;  // room for the caption under the device
+
+      const stage = document.getElementById("stage");
+      const device = document.getElementById("device");
+      const screen = document.getElementById("screen");
+      const frame = document.getElementById("site");
+      const caption = document.getElementById("caption");
+      const buttons = [...document.querySelectorAll(".seg button")];
+
+      const store = {
+        get() { try { return localStorage.getItem("preview-mode"); } catch { return null; } },
+        set(v) { try { localStorage.setItem("preview-mode", v); } catch {} },
+      };
+
+      let mode = ["mobile", "desktop"].includes(location.hash.slice(1))
+        ? location.hash.slice(1)
+        : (store.get() || "mobile");
+
+      function layout() {
+        const cs = getComputedStyle(stage);
+        const availW = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
+        const availH = stage.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - CAPTION_SPACE;
+        const m = MODES[mode];
+        let scale, frameH;
+
+        if (mode === "mobile") {
+          scale = Math.min(1, availW / (m.w + BEZEL * 2), availH / (m.h + BEZEL * 2));
+          frameH = m.h;
+          const b = BEZEL * scale;
+          device.style.width = (m.w * scale + b * 2) + "px";
+          device.style.height = (m.h * scale + b * 2) + "px";
+          Object.assign(screen.style, { left: b + "px", top: b + "px", width: m.w * scale + "px", height: m.h * scale + "px", borderRadius: 34 * scale + "px" });
+          device.style.borderRadius = 46 * scale + "px";
+        } else {
+          scale = Math.min(1, availW / m.w);
+          frameH = Math.max(m.h * 0.75, availH / scale);   // fill the stage height
+          device.style.width = m.w * scale + "px";
+          device.style.height = frameH * scale + "px";
+          Object.assign(screen.style, { left: "", top: "", width: "", height: "", borderRadius: "" });
+          device.style.borderRadius = "";
+        }
+
+        frame.style.width = m.w + "px";
+        frame.style.height = frameH + "px";
+        frame.style.transform = `scale(${scale})`;
+        caption.textContent = m.label + (scale < 0.995 ? ` · shown at ${Math.round(scale * 100)}%` : "");
+      }
+
+      function setMode(next, save = true) {
+        mode = next;
+        device.className = "device device--" + mode;
+        buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
+        if (save) store.set(mode);
+        try { history.replaceState(null, "", "#" + mode); } catch {}
+        layout();
+      }
+
+      buttons.forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
+      document.addEventListener("keydown", (e) => {
+        if (e.metaKey || e.ctrlKey || e.altKey || e.target.closest("input, textarea")) return;
+        if (e.key === "m" || e.key === "M") setMode("mobile");
+        if (e.key === "d" || e.key === "D") setMode("desktop");
+      });
+      window.addEventListener("resize", layout);
+
+      // If the site can't be framed here, say so instead of showing a blank device.
+      frame.addEventListener("load", () => {
+        let ok = false;
+        try { ok = !!frame.contentDocument.querySelector(".site-header"); } catch {}
+        if (!ok) {
+          stage.innerHTML = '<p class="notice">The site couldn\'t load inside this preview. Open <strong>index.html</strong> directly, or run the preview from the project folder with <strong>python3 -m http.server</strong>.</p>';
+        }
+      });
+
+      setMode(mode, false);
+    })();
+  </script>
+</body>
+</html>
