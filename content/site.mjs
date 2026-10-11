@@ -31,7 +31,7 @@ export const LINKS = {
   "Tours & Ranger Programs": "tickets-and-tours.html#free-programs",
   "Choose a time": "crystal-cave.html",
   "Crystal Cave Guided Tour": "crystal-cave.html",
-  "Build this day": "tickets-and-tours.html#day-plans",
+  "See what's included": "tickets-and-tours.html#day-plans",
   "Buy a pass on Recreation.gov": "https://www.recreation.gov/sitepass/72471",
   "Continue to secure checkout": "tour-checkout.html",
   "Open secure checkout": "https://www.sequoiaparksconservancy.org/",

@@ -74,7 +74,10 @@ function header(active, variant, back, pageTitle) {
   if (variant === "search") {
     return `  <header class="site-header site-header--search">
     <div class="container site-header__bar">
-      <h1 class="brand brand--page">Search</h1>
+      <div class="header-lead">
+        <a class="back-btn back-btn--always" href="index.html" aria-label="Back" data-back>${icon("left", 22)}</a>
+        <h1 class="brand brand--page">Search</h1>
+      </div>
       <a class="close-pill" href="index.html">${icon("close", 16)}Close</a>
     </div>
   </header>`;

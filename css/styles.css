@@ -1185,3 +1185,13 @@ button.dot::after { content: ""; position: absolute; inset: -10px -3px; } /* lar
 .icon--28 { width: 28px; height: 28px; stroke-width: 1.6; }
 /* Inner pages keep the mobile header to back, title, search and menu (language stays in the footer and menu) */
 @media (max-width: 1023.98px) { .inner-page .lang-btn { display: none; } }
+/* Chips need to stand off the sand background */
+.suggest-chip { background: var(--white); border: 1px solid rgba(58, 42, 31, 0.16); box-shadow: 0 2px 6px rgba(59, 41, 31, 0.08); }
+.suggest-chip:hover { background: var(--cream); border-color: rgba(58, 42, 31, 0.3); }
+.suggest-chip--hot { background: #F6E3D8; border-color: rgba(181, 88, 47, 0.45); }
+.plan__cta { display: block; margin-top: 2px; font-size: 13px; font-weight: 600; color: rgba(248, 243, 234, 0.85); text-decoration: underline; text-underline-offset: 3px; }
+/* The search page keeps its back button at every width */
+@media (min-width: 1024px) { .back-btn--always { display: inline-flex; } }
+/* Let the search box shrink inside the page grid once the filter button appears */
+.search-page > * { min-width: 0; }
+.search__input { width: 100%; }
