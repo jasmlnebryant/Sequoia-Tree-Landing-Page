@@ -103,14 +103,14 @@ then visit http://localhost:8000.
 
 ### Preview phone and desktop side by side
 
-Open `preview.html` to see the site inside a phone-sized or desktop-sized frame. Click through it like the real site and use **Back** to return. Use the **Mobile / Desktop** buttons (or press **M** / **D**) to switch between the two layouts without resizing your window. Each frame scrolls independently.
+Open `preview.html` to see the site as if it were opened in Safari: an iPhone frame or a Mac browser window. Click through it like the real site and use the Safari back and forward arrows (or reload) to move through your history. Use the **Mobile / Desktop** buttons (or press **M** / **D**) to switch between the two layouts without resizing your window. Each frame scrolls independently.
 
 ## Project structure
 
 ```
 index.html                 Home page (hand-built; shared regions filled by the build)
 *.html                     Inner pages and search, generated from content/site.mjs
-preview.html               Mobile / Desktop preview with a Back button
+preview.html               Mobile / Desktop preview in Safari chrome (back, forward, reload)
 content/site.mjs           Page content and link map
 js/search.js               Search page states and index
 css/styles.css             Design tokens, mobile-first styles, desktop layout at 1024px

@@ -8,36 +8,51 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Averia+Serif+Libre:wght@700&family=DM+Sans:opsz,wght@9..40,500;9..40,600;9..40,700&display=swap" rel="stylesheet">
   <style>
-    /* Layout: a slim bark toolbar over a full-height stage; the site renders
-       inside a device frame that is scaled to fit whatever space is left. */
+    /* Layout: a slim bark toolbar over a full-height stage. The site opens in a
+       Safari window (iOS on the phone, macOS on desktop) drawn at its real size
+       and scaled to fit; back, forward and reload work like the browser's. */
     :root {
-      --bar: #3A2A1F;        /* toolbar, matches the site's bark */
+      --bar: #3A2A1F;
       --bar-ink: #F8F3EA;
       --bar-muted: #C9B8A3;
-      --ground: #E2D9C9;     /* stage behind the device */
+      --ground: #E2D9C9;
       --ground-ink: #6B5848;
-      --bezel: #2B2018;      /* phone body */
-      --frame-line: rgba(58, 42, 31, 0.18);
-      --accent: #B5582F;     /* clay */
+      --bezel: #1B1714;
+      --accent: #B5582F;
       --seg-on: #F8F3EA;
       --seg-on-ink: #3A2A1F;
+      /* Safari chrome */
+      --sf-bar: rgba(246, 246, 248, 0.94);
+      --sf-line: rgba(0, 0, 0, 0.12);
+      --sf-field: #FFFFFF;
+      --sf-field-mac: #E5E5E8;
+      --sf-ink: #1D1D1F;
+      --sf-muted: #8A8A8E;
+      --sf-tint: #007AFF;
+      --sf-off: #C3C3C8;
+      --sf-mac-icon: #5E5E63;
       --font-display: "Averia Serif Libre", Georgia, serif;
       --font-ui: "DM Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+      --font-sys: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Arial, sans-serif;
     }
     @media (prefers-color-scheme: dark) {
       :root:not([data-theme="light"]) {
         --bar: #241A13; --bar-ink: #F3EADC; --bar-muted: #A8977F;
-        --ground: #17110D; --ground-ink: #A8977F;
-        --bezel: #0E0A07; --frame-line: rgba(248, 243, 234, 0.14);
+        --ground: #17110D; --ground-ink: #A8977F; --bezel: #050403;
         --accent: #D27A4F; --seg-on: #F3EADC; --seg-on-ink: #241A13;
+        --sf-bar: rgba(30, 30, 32, 0.94); --sf-line: rgba(255, 255, 255, 0.12);
+        --sf-field: #3A3A3C; --sf-field-mac: #3A3A3C; --sf-ink: #F5F5F7; --sf-muted: #98989D;
+        --sf-tint: #0A84FF; --sf-off: #5A5A5E; --sf-mac-icon: #C7C7CC;
         color-scheme: dark;
       }
     }
     :root[data-theme="dark"] {
       --bar: #241A13; --bar-ink: #F3EADC; --bar-muted: #A8977F;
-      --ground: #17110D; --ground-ink: #A8977F;
-      --bezel: #0E0A07; --frame-line: rgba(248, 243, 234, 0.14);
+      --ground: #17110D; --ground-ink: #A8977F; --bezel: #050403;
       --accent: #D27A4F; --seg-on: #F3EADC; --seg-on-ink: #241A13;
+      --sf-bar: rgba(30, 30, 32, 0.94); --sf-line: rgba(255, 255, 255, 0.12);
+      --sf-field: #3A3A3C; --sf-field-mac: #3A3A3C; --sf-ink: #F5F5F7; --sf-muted: #98989D;
+      --sf-tint: #0A84FF; --sf-off: #5A5A5E; --sf-mac-icon: #C7C7CC;
       color-scheme: dark;
     }
 
@@ -48,8 +63,9 @@
       background: var(--ground); color: var(--ground-ink);
       font-family: var(--font-ui); font-size: 14px;
     }
+    button { font: inherit; }
 
-    /* ---------- Toolbar ---------- */
+    /* ---------- Preview toolbar ---------- */
     .bar {
       display: flex; flex-wrap: wrap; align-items: center; gap: 12px 20px;
       padding: 12px 16px; background: var(--bar); color: var(--bar-ink);
@@ -57,7 +73,6 @@
     .bar__name { display: flex; flex-direction: column; gap: 2px; min-width: 0; margin-right: auto; }
     .bar__title { font-family: var(--font-display); font-weight: 700; font-size: 17px; line-height: 1.1; }
     .bar__sub { font-size: 12px; color: var(--bar-muted); }
-
     .seg {
       display: inline-flex; padding: 4px; gap: 4px; border-radius: 999px;
       background: rgba(255, 255, 255, 0.08); border: 1px solid rgba(255, 255, 255, 0.12);
@@ -65,53 +80,93 @@
     .seg button {
       display: inline-flex; align-items: center; gap: 8px;
       border: 0; border-radius: 999px; padding: 8px 14px; cursor: pointer;
-      background: transparent; color: var(--bar-ink);
-      font: 600 14px/1 var(--font-ui);
+      background: transparent; color: var(--bar-ink); font: 600 14px/1 var(--font-ui);
       transition: background-color 0.15s ease, color 0.15s ease;
     }
     .seg button:hover { background: rgba(255, 255, 255, 0.08); }
     .seg button[aria-pressed="true"] { background: var(--seg-on); color: var(--seg-on-ink); }
-    .seg button:focus-visible, .bar a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+    .seg button:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
     .seg svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
     .seg__px { font-weight: 500; opacity: 0.6; font-variant-numeric: tabular-nums; }
-    .back {
-      display: inline-flex; align-items: center; gap: 8px; border: 1px solid rgba(255, 255, 255, 0.18);
-      border-radius: 999px; padding: 9px 14px; background: transparent; color: var(--bar-ink);
-      font: 600 14px/1 var(--font-ui); cursor: pointer;
-    }
-    .back:hover:not(:disabled) { background: rgba(255, 255, 255, 0.08); }
-    .back:disabled { opacity: 0.4; cursor: default; }
-    .back:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
-    .back svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
-
     .bar__meta { display: flex; align-items: center; gap: 16px; font-size: 13px; color: var(--bar-muted); }
-    .bar__meta kbd {
-      font: 600 11px/1 var(--font-ui); padding: 3px 6px; border-radius: 5px;
-      border: 1px solid rgba(255, 255, 255, 0.22); color: var(--bar-ink);
-    }
+    .bar__meta kbd { font: 600 11px/1 var(--font-ui); padding: 3px 6px; border-radius: 5px; border: 1px solid rgba(255, 255, 255, 0.22); color: var(--bar-ink); }
     .bar a { color: var(--bar-ink); font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--accent); }
+    .bar a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
 
-    /* ---------- Stage ---------- */
+    /* ---------- Stage and device ---------- */
     .stage {
       flex: 1; min-height: 0; overflow: hidden;
       display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px;
       padding: 20px 16px;
     }
     .device { position: relative; flex: none; }
-    .device iframe {
-      position: absolute; top: 0; left: 0; border: 0; display: block;
-      transform-origin: 0 0; background: #EDE5D7;
-    }
-    .device--mobile { border-radius: 46px; background: var(--bezel); box-shadow: 0 24px 60px rgba(20, 14, 10, 0.28); }
-    .device--mobile .screen { position: absolute; overflow: hidden; border-radius: 34px; }
-    .device--desktop { border-radius: 14px; box-shadow: 0 18px 50px rgba(20, 14, 10, 0.2), 0 0 0 1px var(--frame-line); }
-    .device--desktop .screen { position: absolute; inset: 0; overflow: hidden; border-radius: 14px; }
-
+    .device--mobile { background: var(--bezel); box-shadow: 0 24px 60px rgba(20, 14, 10, 0.3), inset 0 0 0 2px rgba(255, 255, 255, 0.06); }
+    .device--desktop { border-radius: 12px; box-shadow: 0 22px 60px rgba(20, 14, 10, 0.25), 0 0 0 1px rgba(0, 0, 0, 0.18); }
+    .screen { position: absolute; overflow: hidden; }
+    .device--desktop .screen { inset: 0; border-radius: 12px; }
     .caption { font-size: 12px; font-variant-numeric: tabular-nums; color: var(--ground-ink); }
-    .notice {
-      max-width: 52ch; padding: 16px 18px; border-radius: 14px; line-height: 1.5;
-      background: var(--bar); color: var(--bar-ink);
+
+    /* The browser, at real size; scaled as one piece */
+    .safari { position: absolute; top: 0; left: 0; display: flex; flex-direction: column; transform-origin: 0 0; background: #EDE5D7; font-family: var(--font-sys); }
+    .safari iframe { flex: 1; width: 100%; border: 0; display: block; background: #EDE5D7; }
+    .sf-btn {
+      display: inline-flex; align-items: center; justify-content: center; border: 0; padding: 0;
+      background: transparent; color: var(--sf-tint); cursor: pointer; border-radius: 8px;
     }
+    .sf-btn:disabled { color: var(--sf-off); cursor: default; }
+    .sf-btn:focus-visible { outline: 3px solid var(--accent); outline-offset: 1px; }
+    .sf-btn svg, .sf-icon { fill: none; stroke: currentColor; stroke-linecap: round; stroke-linejoin: round; }
+
+    /* iOS: status bar on top, address bar and toolbar at the bottom */
+    .ios-status {
+      flex: none; height: 54px; padding: 0 30px 0 44px; position: relative;
+      display: flex; align-items: center; justify-content: space-between;
+      background: #6B5848; color: #FFFFFF; font-weight: 600; font-size: 17px; letter-spacing: -0.01em;
+    }
+    .ios-island { position: absolute; top: 11px; left: 50%; transform: translateX(-50%); width: 124px; height: 36px; border-radius: 20px; background: #000; }
+    .ios-status__icons { display: flex; align-items: center; gap: 6px; }
+    .ios-status__icons svg { display: block; }
+    .ios-bottom {
+      flex: none; padding: 8px 12px 0; background: var(--sf-bar); border-top: 0.5px solid var(--sf-line);
+      -webkit-backdrop-filter: blur(20px); backdrop-filter: blur(20px);
+    }
+    .ios-address {
+      height: 48px; border-radius: 14px; background: var(--sf-field); box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+      display: flex; align-items: center; gap: 8px; padding: 0 8px 0 14px; color: var(--sf-ink);
+    }
+    .ios-address__aa { font-size: 15px; font-weight: 600; letter-spacing: -0.02em; width: 28px; }
+    .ios-address__url { flex: 1; display: flex; align-items: center; justify-content: center; gap: 5px; font-size: 16px; min-width: 0; }
+    .ios-address__url span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .ios-address .sf-btn { width: 36px; height: 36px; color: var(--sf-ink); }
+    .ios-tools { height: 50px; display: flex; align-items: center; justify-content: space-between; padding: 0 8px; margin-top: 4px; }
+    .ios-tools .sf-btn { width: 48px; height: 44px; }
+    .ios-home { height: 26px; display: flex; align-items: center; justify-content: center; }
+    .ios-home span { width: 134px; height: 5px; border-radius: 3px; background: var(--sf-ink); }
+
+    /* macOS: one toolbar row with traffic lights, arrows and a centered address field */
+    .mac-toolbar {
+      flex: none; height: 52px; display: flex; align-items: center; gap: 6px; padding: 0 12px 0 18px;
+      background: var(--sf-bar); border-bottom: 1px solid var(--sf-line);
+    }
+    .mac-lights { display: flex; gap: 8px; margin-right: 14px; }
+    .mac-lights span { width: 12px; height: 12px; border-radius: 50%; box-shadow: inset 0 0 0 0.5px rgba(0, 0, 0, 0.15); }
+    .mac-lights span:nth-child(1) { background: #FF5F57; }
+    .mac-lights span:nth-child(2) { background: #FEBC2E; }
+    .mac-lights span:nth-child(3) { background: #28C840; }
+    .mac-toolbar .sf-btn { width: 32px; height: 28px; color: var(--sf-mac-icon); }
+    .mac-toolbar .sf-btn:hover:not(:disabled) { background: rgba(0, 0, 0, 0.06); }
+    .mac-toolbar .sf-btn:disabled { color: var(--sf-off); }
+    .mac-field {
+      flex: 1; max-width: 560px; margin: 0 auto; height: 32px; border-radius: 9px; background: var(--sf-field-mac);
+      display: flex; align-items: center; gap: 6px; padding: 0 6px 0 12px; color: var(--sf-ink); font-size: 13px;
+    }
+    .mac-field__url { flex: 1; display: flex; align-items: center; justify-content: center; gap: 6px; min-width: 0; }
+    .mac-field__url span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .mac-field__path { color: var(--sf-muted); }
+    .mac-field .sf-btn { width: 24px; height: 24px; }
+    .mac-spacer { width: 104px; display: flex; justify-content: flex-end; gap: 2px; }
+
+    [hidden] { display: none !important; }
 
     @media (max-width: 640px) {
       .bar__meta .hint { display: none; }
@@ -126,10 +181,6 @@
       <span class="bar__title">Visit the Giant Sequoias</span>
       <span class="bar__sub" id="page-name">Home</span>
     </div>
-
-    <button class="back" type="button" id="btn-back" disabled>
-      <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M19 12H5M11 6l-6 6 6 6"/></svg>Back
-    </button>
 
     <div class="seg" role="group" aria-label="Preview size">
       <button type="button" id="btn-mobile" data-mode="mobile" aria-pressed="true">
@@ -151,7 +202,76 @@
   <main class="stage" id="stage">
     <div class="device device--mobile" id="device">
       <div class="screen" id="screen">
-        <iframe id="site" src="index.html" title="Visit the Giant Sequoias landing page"></iframe>
+        <div class="safari" id="safari">
+
+          <!-- macOS Safari toolbar -->
+          <div class="mac-toolbar" data-chrome="desktop" hidden>
+            <div class="mac-lights" aria-hidden="true"><span></span><span></span><span></span></div>
+            <button class="sf-btn" type="button" aria-label="Show sidebar" tabindex="-1">
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke-width="1.6" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2.5"/><path d="M9 5v14"/></svg>
+            </button>
+            <button class="sf-btn" type="button" aria-label="Back" data-nav="back" disabled>
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke-width="2.2" aria-hidden="true"><path d="m14.5 5-7 7 7 7"/></svg>
+            </button>
+            <button class="sf-btn" type="button" aria-label="Forward" data-nav="forward" disabled>
+              <svg viewBox="0 0 24 24" width="20" height="20" stroke-width="2.2" aria-hidden="true"><path d="m9.5 5 7 7-7 7"/></svg>
+            </button>
+            <div class="mac-field">
+              <span class="mac-field__url">
+                <svg class="sf-icon" viewBox="0 0 24 24" width="12" height="12" stroke-width="2.4" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                <span><span data-host></span><span class="mac-field__path" data-path></span></span>
+              </span>
+              <button class="sf-btn" type="button" aria-label="Reload page" data-nav="reload">
+                <svg viewBox="0 0 24 24" width="15" height="15" stroke-width="2.2" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg>
+              </button>
+            </div>
+            <div class="mac-spacer" aria-hidden="true">
+              <span class="sf-btn"><svg viewBox="0 0 24 24" width="19" height="19" stroke-width="1.7"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11v9h12v-9"/></svg></span>
+              <span class="sf-btn"><svg viewBox="0 0 24 24" width="19" height="19" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg></span>
+              <span class="sf-btn"><svg viewBox="0 0 24 24" width="19" height="19" stroke-width="1.7"><rect x="3" y="7" width="13" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-3"/></svg></span>
+            </div>
+          </div>
+
+          <!-- iOS status bar -->
+          <div class="ios-status" data-chrome="mobile" aria-hidden="true">
+            <span>9:41</span>
+            <span class="ios-island"></span>
+            <span class="ios-status__icons">
+              <svg width="18" height="12" viewBox="0 0 18 12" fill="#fff"><rect x="0" y="8" width="3" height="4" rx="1"/><rect x="5" y="6" width="3" height="6" rx="1"/><rect x="10" y="3" width="3" height="9" rx="1"/><rect x="15" y="0" width="3" height="12" rx="1"/></svg>
+              <svg width="16" height="12" viewBox="0 0 16 12" fill="#fff"><path d="M8 2.2c2.4 0 4.6.9 6.2 2.5l1.2-1.3A10.4 10.4 0 0 0 8 .4C5.2.4 2.6 1.5.6 3.4l1.2 1.3A8.6 8.6 0 0 1 8 2.2Z"/><path d="M8 5.6c1.5 0 2.8.6 3.8 1.5l1.2-1.3A7.1 7.1 0 0 0 8 3.8c-1.9 0-3.7.8-5 2l1.2 1.3c1-.9 2.3-1.5 3.8-1.5Z"/><path d="M8 9c.6 0 1.2.2 1.6.6L8 11.4 6.4 9.6C6.8 9.2 7.4 9 8 9Z"/></svg>
+              <svg width="27" height="13" viewBox="0 0 27 13" fill="none"><rect x="0.5" y="0.5" width="23" height="12" rx="3.5" stroke="#fff" stroke-opacity="0.45"/><rect x="2" y="2" width="20" height="9" rx="2" fill="#fff"/><path d="M25 4.5v4c.8-.3 1.3-1.1 1.3-2s-.5-1.7-1.3-2Z" fill="#fff" fill-opacity="0.5"/></svg>
+            </span>
+          </div>
+
+          <iframe id="site" src="index.html" title="Visit the Giant Sequoias landing page"></iframe>
+
+          <!-- iOS address bar and toolbar -->
+          <div class="ios-bottom" data-chrome="mobile">
+            <div class="ios-address">
+              <span class="ios-address__aa" aria-hidden="true">aA</span>
+              <span class="ios-address__url">
+                <svg class="sf-icon" viewBox="0 0 24 24" width="13" height="13" stroke-width="2.4" aria-hidden="true"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+                <span data-host></span>
+              </span>
+              <button class="sf-btn" type="button" aria-label="Reload page" data-nav="reload">
+                <svg viewBox="0 0 24 24" width="18" height="18" stroke-width="2.2" aria-hidden="true"><path d="M20 12a8 8 0 1 1-2.34-5.66"/><path d="M20 4v5h-5"/></svg>
+              </button>
+            </div>
+            <div class="ios-tools">
+              <button class="sf-btn" type="button" aria-label="Back" data-nav="back" disabled>
+                <svg viewBox="0 0 24 24" width="26" height="26" stroke-width="2.3" aria-hidden="true"><path d="m15 4-8 8 8 8"/></svg>
+              </button>
+              <button class="sf-btn" type="button" aria-label="Forward" data-nav="forward" disabled>
+                <svg viewBox="0 0 24 24" width="26" height="26" stroke-width="2.3" aria-hidden="true"><path d="m9 4 8 8-8 8"/></svg>
+              </button>
+              <span class="sf-btn" aria-hidden="true"><svg viewBox="0 0 24 24" width="25" height="25" stroke-width="1.8"><path d="M12 3v12M8 7l4-4 4 4"/><path d="M6 11v9h12v-9"/></svg></span>
+              <span class="sf-btn" aria-hidden="true"><svg viewBox="0 0 24 24" width="25" height="25" stroke-width="1.8"><path d="M4 5.5C6.5 4 9.5 4 12 6c2.5-2 5.5-2 8-.5V19c-2.5-1.5-5.5-1.5-8 .5-2.5-2-5.5-2-8-.5Z"/><path d="M12 6v13.5"/></svg></span>
+              <span class="sf-btn" aria-hidden="true"><svg viewBox="0 0 24 24" width="24" height="24" stroke-width="1.8"><rect x="3" y="7" width="13" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v9a2 2 0 0 1-2 2h-3"/></svg></span>
+            </div>
+            <div class="ios-home" aria-hidden="true"><span></span></div>
+          </div>
+
+        </div>
       </div>
     </div>
     <p class="caption" id="caption" aria-live="polite"></p>
@@ -160,18 +280,21 @@
   <script>
     (() => {
       const MODES = {
-        mobile:  { w: 390,  h: 844, label: "Phone · 390 × 844" },
-        desktop: { w: 1280, h: 800, label: "Desktop · 1280 wide" },
+        mobile:  { w: 390,  h: 844, label: "iPhone · Safari · 390 × 844" },
+        desktop: { w: 1280, h: 800, label: "Mac · Safari · 1280 wide" },
       };
-      const BEZEL = 12;          // phone border width at 100%
+      const BEZEL = 12;          // phone border at 100%
       const CAPTION_SPACE = 28;  // room for the caption under the device
+      const HOST = "sequoia-groves.example";
 
       const stage = document.getElementById("stage");
       const device = document.getElementById("device");
       const screen = document.getElementById("screen");
+      const safari = document.getElementById("safari");
       const frame = document.getElementById("site");
       const caption = document.getElementById("caption");
-      const buttons = [...document.querySelectorAll(".seg button")];
+      const pageName = document.getElementById("page-name");
+      const modeButtons = [...document.querySelectorAll(".seg button")];
 
       const store = {
         get() { try { return localStorage.getItem("preview-mode"); } catch { return null; } },
@@ -182,46 +305,48 @@
         ? location.hash.slice(1)
         : (store.get() || "mobile");
 
+      /* ---------- Size the device and scale the browser to fit ---------- */
       function layout() {
         const cs = getComputedStyle(stage);
         const availW = stage.clientWidth - parseFloat(cs.paddingLeft) - parseFloat(cs.paddingRight);
         const availH = stage.clientHeight - parseFloat(cs.paddingTop) - parseFloat(cs.paddingBottom) - CAPTION_SPACE;
         const m = MODES[mode];
-        let scale, frameH;
+        let scale, h;
 
         if (mode === "mobile") {
           scale = Math.min(1, availW / (m.w + BEZEL * 2), availH / (m.h + BEZEL * 2));
-          frameH = m.h;
+          h = m.h;
           const b = BEZEL * scale;
           device.style.width = (m.w * scale + b * 2) + "px";
           device.style.height = (m.h * scale + b * 2) + "px";
-          Object.assign(screen.style, { left: b + "px", top: b + "px", width: m.w * scale + "px", height: m.h * scale + "px", borderRadius: 34 * scale + "px" });
-          device.style.borderRadius = 46 * scale + "px";
+          device.style.borderRadius = 56 * scale + "px";
+          Object.assign(screen.style, { left: b + "px", top: b + "px", width: m.w * scale + "px", height: m.h * scale + "px", borderRadius: 46 * scale + "px" });
         } else {
           scale = Math.min(1, availW / m.w);
-          frameH = Math.max(m.h * 0.75, availH / scale);   // fill the stage height
+          h = Math.max(600, availH / scale);
           device.style.width = m.w * scale + "px";
-          device.style.height = frameH * scale + "px";
-          Object.assign(screen.style, { left: "", top: "", width: "", height: "", borderRadius: "" });
+          device.style.height = h * scale + "px";
           device.style.borderRadius = "";
+          Object.assign(screen.style, { left: "", top: "", width: "", height: "", borderRadius: "" });
         }
 
-        frame.style.width = m.w + "px";
-        frame.style.height = frameH + "px";
-        frame.style.transform = `scale(${scale})`;
+        safari.style.width = m.w + "px";
+        safari.style.height = h + "px";
+        safari.style.transform = `scale(${scale})`;
         caption.textContent = m.label + (scale < 0.995 ? ` · shown at ${Math.round(scale * 100)}%` : "");
       }
 
       function setMode(next, save = true) {
         mode = next;
         device.className = "device device--" + mode;
-        buttons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
+        document.querySelectorAll("[data-chrome]").forEach((el) => { el.hidden = el.dataset.chrome !== mode; });
+        modeButtons.forEach((b) => b.setAttribute("aria-pressed", String(b.dataset.mode === mode)));
         if (save) store.set(mode);
         try { history.replaceState(null, "", "#" + mode); } catch {}
         layout();
       }
 
-      buttons.forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
+      modeButtons.forEach((b) => b.addEventListener("click", () => setMode(b.dataset.mode)));
       document.addEventListener("keydown", (e) => {
         if (e.metaKey || e.ctrlKey || e.altKey || e.target.closest("input, textarea")) return;
         if (e.key === "m" || e.key === "M") setMode("mobile");
@@ -229,15 +354,14 @@
       });
       window.addEventListener("resize", layout);
 
-      /* ---------- Pages and history ----------
+      /* ---------- Pages and browser history ----------
          Published as one file, the pages are embedded in #pages and shown with
          srcdoc. Run from the project folder, the frame loads the real files. */
       const pagesEl = document.getElementById("pages");
       const PAGES = pagesEl ? JSON.parse(pagesEl.textContent) : null;
-      const backBtn = document.getElementById("btn-back");
-      const pageName = document.getElementById("page-name");
-      const stack = [];
-      let goingBack = false;
+      const entries = [];   // visited pages, like the browser's history
+      let index = -1;       // current entry
+      let pendingIndex = null;
       let ready = false;
 
       function show(href) {
@@ -250,32 +374,52 @@
         frame.srcdoc = html.replace("<!--EMBED-->", embed);
       }
 
+      function updateChrome(title) {
+        const href = entries[index] || "index.html";
+        const path = href.replace(/^index\.html/, "").replace(/\.html/, "").replace(/#.*$/, "");
+        document.querySelectorAll("[data-host]").forEach((el) => { el.textContent = HOST; });
+        document.querySelectorAll("[data-path]").forEach((el) => { el.textContent = path ? "/" + path : ""; });
+        document.querySelectorAll('[data-nav="back"]').forEach((b) => { b.disabled = index <= 0; });
+        document.querySelectorAll('[data-nav="forward"]').forEach((b) => { b.disabled = index >= entries.length - 1; });
+        if (title) pageName.textContent = title === "Visit the Giant Sequoias" ? "Home" : title;
+      }
+
+      function goTo(i) {
+        if (i < 0 || i >= entries.length) return;
+        pendingIndex = i;
+        show(entries[i]);
+      }
+
       window.addEventListener("message", (e) => {
         if (e.source !== frame.contentWindow || !e.data) return;
         if (e.data.type === "sequoia-navigate") show(e.data.href);
         if (e.data.type === "sequoia-site-ready") {
           ready = true;
-          if (goingBack) goingBack = false;
-          else if (stack[stack.length - 1] !== e.data.href) stack.push(e.data.href);
-          backBtn.disabled = stack.length < 2;
-          pageName.textContent = e.data.title === "Visit the Giant Sequoias" ? "Home" : e.data.title;
+          if (pendingIndex !== null) {
+            index = pendingIndex;           // back, forward or reload
+            pendingIndex = null;
+          } else if (entries[index] !== e.data.href) {
+            entries.splice(index + 1);      // a new page drops the forward history
+            entries.push(e.data.href);
+            index = entries.length - 1;
+          }
+          updateChrome(e.data.title);
         }
       });
 
-      backBtn.addEventListener("click", () => {
-        if (stack.length < 2) return;
-        stack.pop();
-        goingBack = true;
-        show(stack[stack.length - 1]);
-      });
+      document.querySelectorAll("[data-nav]").forEach((btn) => btn.addEventListener("click", () => {
+        if (btn.dataset.nav === "back") goTo(index - 1);
+        if (btn.dataset.nav === "forward") goTo(index + 1);
+        if (btn.dataset.nav === "reload") goTo(index);
+      }));
 
       setTimeout(() => {
         if (!ready) caption.textContent += " · If the page stays blank, open preview.html from the project folder.";
       }, 6000);
 
-      if (PAGES) show("index.html");
-
+      updateChrome();
       setMode(mode, false);
+      if (PAGES) show("index.html");
     })();
   </script>
 </body>
