@@ -70,7 +70,7 @@ ${Object.entries(ICONS).map(([k, v]) => `      <symbol id="i-${k}" viewBox="0 0 
   </svg>`;
 
 /* ---------- header, menu, footer ---------- */
-function header(active, variant) {
+function header(active, variant, back) {
   if (variant === "search") {
     return `  <header class="site-header site-header--search">
     <div class="container site-header__bar">
@@ -82,7 +82,10 @@ function header(active, variant) {
   const menuRow = (label) => `<li><a class="menu-row" href="#">${label}${icon("right", 16)}</a></li>`;
   return `  <header class="site-header">
     <div class="container site-header__bar">
-      <a class="brand" href="index.html"><span class="brand__line">Visit the Giant</span> <span class="brand__line">Sequoias</span></a>
+      <div class="header-lead">
+        ${back ? `<a class="back-btn" href="${back}" aria-label="Back" data-back>${icon("left", 22)}</a>` : ""}
+        <a class="brand" href="index.html"><span class="brand__line">Visit the Giant</span> <span class="brand__line">Sequoias</span></a>
+      </div>
 
       <nav class="utility-nav" aria-label="Utilities">
         <a class="pill-link" href="search.html">${icon("search", 18)}Search${icon("right", 16, "pill-link__arrow")}</a>
@@ -328,7 +331,7 @@ function renderSections(sections) {
   return out;
 }
 
-function shell({ title, description, nav, main, variant, scripts = [] }) {
+function shell({ title, description, nav, main, variant, back, scripts = [] }) {
   const fullTitle = title === SITE ? SITE : `${title} · ${SITE}`;
   return `<!doctype html>
 <html lang="en">
@@ -353,7 +356,7 @@ ${SPRITE}
   <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- build:header -->
-${header(nav, variant)}
+${header(nav, variant, back)}
   <!-- /build:header -->
 
   <main id="main" class="page-main">${main}
@@ -423,8 +426,17 @@ const searchMain = `
 
 /* ---------- write files ---------- */
 const written = [];
+/* Where the in-page back button goes when there is no history to return to:
+   the page's own "parent", else its nearest linked breadcrumb, else home. */
+function parentOf(page) {
+  if (page.parent) return page.parent;
+  const crumbsList = page.sections.find((b) => b.crumbs)?.crumbs || [];
+  const linked = crumbsList.map(hrefFor).filter((h) => h !== "#" && h !== page.file);
+  return linked.at(-1) || "index.html";
+}
+
 for (const page of PAGES) {
-  const html = resolveLinks(shell({ ...page, main: renderSections(page.sections) }));
+  const html = resolveLinks(shell({ ...page, back: parentOf(page), main: renderSections(page.sections) }));
   writeFileSync(join(ROOT, page.file), html);
   written.push(page.file);
 }

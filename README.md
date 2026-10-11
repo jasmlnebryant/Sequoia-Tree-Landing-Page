@@ -103,7 +103,7 @@ then visit http://localhost:8000.
 
 ### Preview phone and desktop side by side
 
-Open `preview.html` to see the site as if it were opened in Safari: an iPhone frame or a Mac browser window. Click through it like the real site and use the Safari back and forward arrows (or reload) to move through your history. Use the **Mobile / Desktop** buttons (or press **M** / **D**) to switch between the two layouts without resizing your window. Each frame scrolls independently.
+Open `preview.html` to see the site as if it were opened in Safari: an iPhone frame or a Mac browser window. Click through it like the real site and use the Safari back and forward arrows (or reload) to move through your history. Inner pages also have their own back button in the mobile header. Flip the **Safari bar** switch (or press **S**) to hide the browser bars and see the site full-screen. Use the **Mobile / Desktop** buttons (or press **M** / **D**) to switch between the two layouts without resizing your window. Each frame scrolls independently.
 
 ## Project structure
 

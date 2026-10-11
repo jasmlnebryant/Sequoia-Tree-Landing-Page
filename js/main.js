@@ -69,11 +69,32 @@
     window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 12, behavior });
   };
 
+  /* ---------- In-page back button (mobile header) ----------
+     Inside the preview, the preview's history decides where "back" goes.
+     On its own, the browser goes back when it came from this site,
+     otherwise the link's own href (the page's parent) is used. */
+  const goBack = (fallback) => {
+    if (window.parent !== window) {
+      window.parent.postMessage({ type: "sequoia-back", fallback }, "*");
+      return;
+    }
+    let sameSite = false;
+    try { sameSite = !!document.referrer && new URL(document.referrer).origin === location.origin; } catch {}
+    if (sameSite && history.length > 1) history.back();
+    else location.href = fallback;
+  };
+
   /* ---------- Links ---------- */
   document.addEventListener("click", (e) => {
     const a = e.target.closest("a[href]");
     if (!a) return;
     const href = a.getAttribute("href");
+
+    if (a.hasAttribute("data-back")) {
+      e.preventDefault();
+      goBack(href);
+      return;
+    }
 
     if (href === "#") {
       e.preventDefault();

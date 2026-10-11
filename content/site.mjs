@@ -160,7 +160,7 @@ export const PAGES = [
     ],
   },
   {
-    file: "purchase.html", nav: "plan", title: "Continue to the official purchase site",
+    file: "purchase.html", nav: "plan", parent: "fees-and-passes.html", title: "Continue to the official purchase site",
     description: "Leave this site to buy a park pass from Recreation.gov, the official provider.",
     sections: [
       { t: "intro", eyebrow: "Leaving this site", title: "Continue to the official purchase site", desc: "Review current fees, eligibility, and payment details with the official provider." },

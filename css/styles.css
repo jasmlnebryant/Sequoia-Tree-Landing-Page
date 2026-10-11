@@ -175,6 +175,17 @@ button.dot::after { content: ""; position: absolute; inset: -10px -3px; } /* lar
 }
 .brand__line { display: block; }
 
+/* Mobile back button, left of the brand on inner pages */
+.header-lead { display: flex; align-items: center; gap: 12px; min-width: 0; }
+.back-btn {
+  display: inline-flex; align-items: center; justify-content: center; flex: none;
+  width: 44px; height: 44px; margin-left: -4px; border-radius: 14px;
+  background: rgba(248, 243, 234, 0.14); color: var(--cream);
+  transition: background-color 0.15s ease;
+}
+.back-btn:hover { background: rgba(248, 243, 234, 0.24); }
+.back-btn:focus-visible { outline: 3px solid var(--sage-btn); outline-offset: 2px; }
+
 .header-actions { display: flex; gap: 8px; }
 .icon-btn {
   display: inline-flex; align-items: center; justify-content: center;
@@ -748,6 +759,7 @@ button.dot::after { content: ""; position: absolute; inset: -10px -3px; } /* lar
   .brand { font-size: 26px; }
   .brand__line { display: inline; }
   .header-actions { display: none; }
+  .back-btn { display: none; }
   .utility-nav { display: flex; gap: 24px; }
   .pill-link {
     display: inline-flex; align-items: center; gap: 10px;
