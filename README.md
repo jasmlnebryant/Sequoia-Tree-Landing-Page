@@ -2,7 +2,7 @@
 
 A mobile-first visitor website for the giant sequoia groves of **Sequoia & Kings Canyon National Parks**, helping visitors plan a trip, compare Giant Forest and Grant Grove, find accessible routes, and learn why these trees matter.
 
-> **Status:** The mobile-first landing page is built (HTML, CSS, vanilla JS). Hi-fi designs for the remaining pages live in Figma.
+> **Status:** A clickable prototype of every hi-fi page from Figma (HTML, CSS, vanilla JS), with real NPS content. Pages that weren't designed yet show a short "not built yet" message.
 
 ## The problem
 
@@ -57,10 +57,39 @@ I directed the design decisions; Claude generated options and did the heavy lift
 - [x] Build the mobile landing page in HTML/CSS from the hi-fi Home screen
 - [x] Make it responsive up to the desktop layout
 - [x] Add the photo and grove carousels
+- [x] Build the hi-fi pages from Figma and link them together
 - [ ] Add the four photos to `assets/img/` (see the note there)
+- [ ] Design and build the remaining pages (Grant Grove, Directions, Current Conditions, Visitor Help…)
 - [ ] Publish with GitHub Pages
-- [ ] Build the inner pages (Plan Your Visit, groves, accessibility)
 - [ ] Recheck all park information against NPS before publishing
+
+## Pages
+
+| Page | File | Figma screen |
+|---|---|---|
+| Home | `index.html` | 01 (mobile) and Desktop Home |
+| Menu | drawer on every page | 02 |
+| Plan Your Visit | `plan-your-visit.html` | 03 |
+| Hours & Seasons | `hours-and-seasons.html` | 04 |
+| Entrance Fees & Passes | `fees-and-passes.html` | 05 |
+| Official purchase handoff | `purchase.html` | 06 |
+| Compare Groves | `compare-groves.html` | 07 |
+| Giant Forest | `giant-forest.html` | 08 |
+| General Sherman Tree | `general-sherman-tree.html` | 09 |
+| About the Sequoias | `about-the-sequoias.html` | 10 |
+| People & History | `people-and-history.html` | 11 |
+| Search (entry, autocomplete, results, filters, no results) | `search.html` | 12–17, 19 |
+| Accessible Trails & Routes | `accessible-trails.html` | 18 |
+
+Try searching for **tickets**, **wheelchair access** or **tree elevator** to see the search states.
+
+## Editing pages
+
+Inner pages are generated, so edit the content rather than the HTML:
+
+- `content/site.mjs` holds each page's copy and the `LINKS` map that decides where every button goes (by its label).
+- `node scripts/build-pages.mjs` rebuilds the pages and refreshes the shared header, menu and footer in `index.html`.
+- `node scripts/build-preview-bundle.mjs` packs everything into one file (`dist/preview-bundle.html`) for hosts that serve a single page.
 
 ## Run it locally
 
@@ -74,16 +103,21 @@ then visit http://localhost:8000.
 
 ### Preview phone and desktop side by side
 
-Open `preview.html` to see the page inside a phone-sized or desktop-sized frame. Use the **Mobile / Desktop** buttons (or press **M** / **D**) to switch between the two layouts without resizing your window. Each frame scrolls independently.
+Open `preview.html` to see the site inside a phone-sized or desktop-sized frame. Click through it like the real site and use **Back** to return. Use the **Mobile / Desktop** buttons (or press **M** / **D**) to switch between the two layouts without resizing your window. Each frame scrolls independently.
 
 ## Project structure
 
 ```
-index.html                 Landing page markup (semantic HTML + inline icon sprite)
-preview.html               Mobile / Desktop preview toggle for reviewing the page
+index.html                 Home page (hand-built; shared regions filled by the build)
+*.html                     Inner pages and search, generated from content/site.mjs
+preview.html               Mobile / Desktop preview with a Back button
+content/site.mjs           Page content and link map
+js/search.js               Search page states and index
 css/styles.css             Design tokens, mobile-first styles, desktop layout at 1024px
-js/main.js                 Mobile menu, hero carousel, grove carousel
+js/main.js                 Menu, carousels, grove switch, links between pages
 assets/textures/           Tree-ring SVG textures
 assets/img/                Photos
-scripts/generate-textures.mjs   Regenerates the ring textures (node scripts/generate-textures.mjs)
+scripts/build-pages.mjs    Builds the pages from content/site.mjs
+scripts/build-preview-bundle.mjs   Packs the preview and pages into one file
+scripts/generate-textures.mjs   Regenerates the ring textures
 ```
