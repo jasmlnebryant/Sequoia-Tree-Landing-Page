@@ -11,6 +11,9 @@
     img.addEventListener("error", hide);
   });
 
+  /* ---------- Search (no results page yet) ---------- */
+  document.querySelector("form.search")?.addEventListener("submit", (e) => e.preventDefault());
+
   /* ---------- Mobile menu ---------- */
   const toggle = document.querySelector("[data-menu-toggle]");
   const nav = document.getElementById("primary-nav");
