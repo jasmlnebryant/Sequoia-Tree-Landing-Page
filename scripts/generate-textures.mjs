@@ -53,6 +53,7 @@ const textures = {
   // Mobile
   "rings-sand.svg": { w: 390, h: 300, cx: 400, cy: -20, n: 14, step: 16, color: INK, opacity: 0.07 },
   "heartwood.svg": { w: 390, h: 340, cx: 318, cy: 150, n: 16, step: 13, color: CREAM, opacity: 0.12, heart: true },
+  "rings-moss.svg": { w: 390, h: 320, cx: 360, cy: 40, n: 14, step: 15, color: CREAM, opacity: 0.1 },
   "log-slice.svg": { w: 165, h: 165, cx: 82.5, cy: 82.5, n: 5, step: 13, color: CREAM, opacity: 0.14 },
   // Desktop
   "rings-sand-wide.svg": { w: 1280, h: 320, cx: 1260, cy: -60, n: 14, step: 20, color: INK, opacity: 0.06 },
