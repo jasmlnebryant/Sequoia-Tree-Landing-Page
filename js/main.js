@@ -16,8 +16,57 @@
     try { window.parent.postMessage({ type: "sequoia-site-ready" }, "*"); } catch {}
   }
 
+  /* ---------- Links ----------
+     Pages other than Home aren't built yet, so placeholder links (href="#")
+     show a short message instead of navigating. In-page links scroll here
+     with script, which also keeps the page in place inside preview.html. */
+  const toast = document.querySelector("[data-toast]");
+  let toastTimer;
+  const showToast = (message) => {
+    if (!toast) return;
+    toast.textContent = message;
+    toast.hidden = false;
+    requestAnimationFrame(() => toast.classList.add("is-visible"));
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => {
+      toast.classList.remove("is-visible");
+      setTimeout(() => { toast.hidden = true; }, 250);
+    }, 2600);
+  };
+  const labelOf = (a) => {
+    const el = a.querySelector(".tile__label, .nav-row__label, .ring-row__label, .conditions-card__title, .btn span, .log-slice span");
+    return (el || a).textContent.replace(/\s+/g, " ").replace("→", "").trim();
+  };
+  const scrollBehavior = reduceMotion ? "auto" : "smooth";
+
+  document.addEventListener("click", (e) => {
+    const a = e.target.closest("a[href]");
+    if (!a) return;
+    const href = a.getAttribute("href");
+
+    if (href === "./") {
+      e.preventDefault();
+      window.scrollTo({ top: 0, behavior: scrollBehavior });
+      return;
+    }
+    if (!href.startsWith("#")) return;
+    e.preventDefault();
+
+    if (href === "#") {
+      showToast(`${labelOf(a)} isn't built yet in this prototype.`);
+      return;
+    }
+    const target = document.getElementById(href.slice(1));
+    if (!target) return;
+    window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 12, behavior: scrollBehavior });
+    if (href === "#search") document.getElementById("site-search")?.focus({ preventScroll: true });
+  });
+
   /* ---------- Search (no results page yet) ---------- */
-  document.querySelector("form.search")?.addEventListener("submit", (e) => e.preventDefault());
+  document.querySelector("form.search")?.addEventListener("submit", (e) => {
+    e.preventDefault();
+    showToast("Search results aren't built yet in this prototype.");
+  });
 
   /* ---------- Mobile menu ---------- */
   const toggle = document.querySelector("[data-menu-toggle]");

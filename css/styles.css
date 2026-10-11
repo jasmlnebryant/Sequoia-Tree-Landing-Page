@@ -585,6 +585,18 @@ button.dot::after { content: ""; position: absolute; inset: -10px -3px; } /* lar
   .site-footer { padding: 28px 0 32px; }
 }
 
+/* ---------- Toast (placeholder-link feedback) ---------- */
+.toast {
+  position: fixed; left: 50%; bottom: 20px; z-index: 50;
+  transform: translate(-50%, 12px); opacity: 0;
+  width: max-content; max-width: calc(100vw - 32px); padding: 12px 18px; border-radius: 999px;
+  background: var(--bark); color: var(--cream); box-shadow: 0 10px 30px rgba(20, 14, 10, 0.25);
+  font-weight: 600; font-size: 14px; text-align: center;
+  transition: opacity 0.2s ease, transform 0.2s ease;
+}
+.toast.is-visible { opacity: 1; transform: translate(-50%, 0); }
+.toast[hidden] { display: none; }
+
 /* ---------- Motion preferences ---------- */
 @media (prefers-reduced-motion: reduce) {
   html { scroll-behavior: auto; }
