@@ -25,6 +25,18 @@ export const LINKS = {
   "Accessibility": "accessible-trails.html",
   "Accessible Trails & Routes": "accessible-trails.html",
 
+  // Tickets, tours and booking
+  "Tickets & Tours": "tickets-and-tours.html",
+  "Tours & Ranger Programs": "tickets-and-tours.html#free-programs",
+  "Choose a time": "crystal-cave.html",
+  "Crystal Cave Guided Tour": "crystal-cave.html",
+  "Build this day": "tickets-and-tours.html#day-plans",
+  "Buy a pass on Recreation.gov": "https://www.recreation.gov/sitepass/72471",
+  "Continue to secure checkout": "tour-checkout.html",
+  "Open secure checkout": "https://www.sequoiaparksconservancy.org/",
+  "Back to Crystal Cave": "crystal-cave.html",
+  "Language Resources": "#language",
+
   // Groves
   "Explore the Groves": "compare-groves.html",
   "Compare Groves": "compare-groves.html",
@@ -52,14 +64,14 @@ export const LINKS = {
 
 /* Icon for a link or tile, chosen from its label. */
 export const ICON_RULES = [
-  [/fee|pass\b|passes|ticket|purchase|entrance|payment|reservation/i, "ticket"],
+  [/fee|pass\b|passes|ticket|tour|purchase|entrance|payment|reservation/i, "ticket"],
   [/hour|season/i, "clock"],
   [/parking|mobility/i, "car"],
   [/direction|transport|arrival|getting/i, "nav"],
   [/wheelchair|accessib/i, "access"],
   [/trail|walk|route|approach/i, "route"],
   [/itinerar|overview/i, "cal"],
-  [/ranger|safety|rule|protect/i, "shield"],
+  [/ranger|safety|rule|guideline|protect/i, "shield"],
   [/alert|condition/i, "alert"],
   [/map/i, "map"],
   [/food|stay/i, "food"],
@@ -85,11 +97,11 @@ export const NAV = [
 export const MENU = {
   group: {
     title: "Plan Your Visit",
-    items: ["Entrance Fees & Passes", "Hours & Seasons", "Directions & Transportation", "Accessibility", "Food & Places to Stay", "Safety & Visitor Rules"],
+    items: ["Entrance Fees & Passes", "Tickets & Tours", "Hours & Seasons", "Directions & Transportation", "Accessibility", "Food & Places to Stay", "Safety & Visitor Guidelines"],
     overview: "Plan Your Visit overview",
   },
   sections: ["Explore the Groves", "About the Sequoias", "Visitor Help"],
-  utilities: ["Search", "Alerts & Conditions", "Maps"],
+  utilities: ["Search", "Alerts & Conditions", "Maps", "Language Resources"],
 };
 
 export const FOOTER = ["Home", "Visitor Help", "Contact a Ranger", "Language Resources", "Official NPS Sources"];
@@ -112,8 +124,8 @@ export const PAGES = [
     description: "Fees, hours, directions, accessibility and safety for a visit to the giant sequoia groves.",
     sections: [
       { t: "intro", eyebrow: "Trip planning", title: "Plan Your Visit", desc: "Find the essentials for a visit to the giant sequoia groves." },
-      { t: "tiles", cols: 3, items: ["Entrance Fees & Passes", "Hours & Seasons", "Directions & Transportation", "Accessibility", "Food & Places to Stay", "Safety & Visitor Rules"] },
-      { t: "rows", bg: "bark", eyebrow: "Where to next", title: "Plan where to go", items: ["Compare Groves", "Current Conditions"] },
+      { t: "tiles", cols: 3, items: ["Entrance Fees & Passes", "Hours & Seasons", "Directions & Transportation", "Accessibility", "Food & Places to Stay", "Safety & Visitor Guidelines"] },
+      { t: "rows", bg: "bark", eyebrow: "Where to next", title: "Plan where to go", items: ["Compare Groves", "Tickets & Tours", "Current Conditions"] },
     ],
   },
   {
@@ -123,7 +135,7 @@ export const PAGES = [
       { t: "intro", crumbs: ["Home", "Plan Your Visit"], eyebrow: "Plan your visit", title: "Hours & Seasons" },
       { t: "facts", title: "Park access", fields: [
         ["Park entry and access hours", "Open 24 hours a day, 365 days a year"],
-        ["Entry requirements", "No reservations needed. Buy an entrance pass at the gate (cashless) or online."],
+        ["Entry requirements", "Drive in any time — just bring a pass. Buy at the gate (cashless) or online."],
       ] },
       { t: "facts", title: "Visitor center and facility hours", desc: "Facility opening hours are separate from park access. Check the facility you plan to visit.", fields: [
         ["Visitor center hours", "Foothills, Giant Forest Museum and Kings Canyon Visitor Center are open year-round, about 9 am–4:30 pm (longer in summer)"],
@@ -156,7 +168,7 @@ export const PAGES = [
         ["Payment methods and purchase locations", "Cards and mobile pay only at entrance stations. Cash accepted at the Foothills and Kings Canyon visitor center park stores."],
         ["Official purchase provider", "Recreation.gov (digital passes)"],
       ] },
-      { t: "ctas", bg: "bark", eyebrow: "Ready to purchase", primary: "Continue to Official Pass Purchase", primaryIcon: "upright", secondary: "Entry Reservation Information" },
+      { t: "ctas", bg: "bark", eyebrow: "Ready to purchase", primary: "Continue to Official Pass Purchase", primaryIcon: "upright", secondary: "Tickets & Tours" },
     ],
   },
   {
@@ -185,7 +197,7 @@ export const PAGES = [
         ["Featured landmark", "General Grant Tree"],
         ["Walking options", "General Grant Tree Trail (0.3 mi paved loop); Panoramic Point (0.5 mi, seasonal)"],
         ["Arrival and parking information", "General Grant Tree lot near Grant Grove Village, via Hwy 180 and the Big Stump entrance"],
-        ["Accessibility details", "Paved but steep in places; not designated wheelchair-accessible. Tactile and Braille panels along the trail."],
+        ["Accessibility details", "Paved, with some steeper stretches. For a step-free route, see the Big Trees Trail. Tactile and Braille panels along the trail."],
       ], links: ["Grant Grove access details", "Directions & Transportation", "Current conditions", "People & History"], cta: "Explore Grant Grove" },
     ],
   },
@@ -206,7 +218,7 @@ export const PAGES = [
       { t: "rows", bg: "bark", eyebrow: "Access", title: "Accessibility", items: ["Accessible Trails & Routes", "Parking & Mobility Support"] },
       { t: "rows", bg: "bark", eyebrow: "Right now", title: "Conditions", items: ["Current Conditions"] },
       { t: "rows", bg: "paper", eyebrow: "Learn more", title: "Related History & Ecology", items: ["People & History", "Fire & Forest Ecology"] },
-      { t: "ugc", bg: "moss", eyebrow: "Community", title: "Visitor Photos & Stories", desc: "This area is reserved for visitor-submitted photos and stories. No collected submissions are available yet." },
+      { t: "ugc", bg: "moss", eyebrow: "Community", title: "Visitor Photos & Stories", desc: "Be the first to share a photo or story from Giant Forest. Tag #VisitTheGiants." },
     ],
   },
   {
@@ -248,7 +260,7 @@ export const PAGES = [
         ["Climate & Conservation", "Learn about conservation questions and the future of the groves.", "globe"],
         ["People & History", "Explore human connections to the groves and their protection history.", "book"],
       ] },
-      { t: "reflect", bg: "moss", eyebrow: "Future contributions", title: "Visitor reflections", desc: "This area is reserved for future visitor reflections and photo contributions.", cards: [
+      { t: "reflect", bg: "moss", eyebrow: "Future contributions", title: "Visitor reflections", desc: "Share what you noticed on your visit — your photos and reflections help the next visitor plan.", cards: [
         ["Photo contribution", "Upload a photo or add a short reflection about your visit.", "Add photo", "camera"],
         [null, "Share what you noticed, learned, or remembered from your visit.", "Add reflection", "edit"],
       ] },
@@ -302,7 +314,7 @@ export const PAGES = [
               ["Accessible parking", "Dedicated trailhead lot, 9 spaces (no access aisles)"],
               ["Nearby facilities", "Accessible flush restrooms and bottle filler at the trailhead"],
               ["Access details", "Benches with backrests; 0.25 mi paved link from Giant Forest Museum"],
-              ["Elevation gain", "Not listed by NPS; moderately sloped loop"],
+              ["Elevation gain", "Moderately sloped loop; NPS lists no exact figure"],
             ], links: ["Current conditions"] },
         ],
         // Grant Grove wasn't detailed in Figma; facts from nps.gov/seki accessibility pages.
@@ -333,6 +345,56 @@ export const PAGES = [
             ], links: ["Current conditions"] },
         ],
       } },
+    ],
+  },
+
+  /* ---------- Tickets, tours and booking ---------- */
+  {
+    file: "tickets-and-tours.html", nav: "plan", title: "Tickets & Tours",
+    description: "Entrance passes, Crystal Cave timed tours, free ranger programs and ready-made day plans.",
+    sections: [
+      { t: "intro", crumbs: ["Home", "Plan Your Visit"], eyebrow: "Plan your visit", title: "Tickets & Tours", desc: "Passes, timed tours, free ranger programs and ready-made day plans in one place." },
+      { t: "chips", label: "Jump to", items: [["All", "#main"], ["Passes", "#passes"], ["Timed tours", "#timed-tours"], ["Free programs", "#free-programs"], ["Day plans", "#day-plans"]] },
+      { t: "passes", id: "passes", eyebrow: "Entrance passes", title: "Arrive any time", desc: "Every pass covers Sequoia and Kings Canyon for 7 days. Come and go on your schedule.",
+        href: "purchase.html", items: [["car", "Private vehicle", "$35"], ["route", "Motorcycle", "$30"], ["nav", "On foot or bike", "$20 per person"], ["ticket", "Sequoia & Kings Canyon annual pass", "$70"]], cta: "Buy a pass on Recreation.gov" },
+      { t: "tour", id: "timed-tours", bg: "paper", eyebrow: "Timed tours", title: "Pick a time slot", desc: "Tours run May 22 – Nov 1, 2026. Tickets sell online only and often sell out, so book early.",
+        tag: "Timed tour", urgency: "Selling fast", name: "Crystal Cave Guided Tour", text: "A 50-minute guided walk through a marble cave, led by Sequoia Parks Conservancy guides.",
+        meta: [["clock", "50 min"], ["ticket", "$22 adult · $11 child"], ["route", "½-mile loop"]], avail: "Sat, Jul 18 · 5 times open · 2 left at 11:00", cta: "Choose a time", href: "crystal-cave.html" },
+      { t: "programs", id: "free-programs", bg: "paper", eyebrow: "Free programs", title: "Walks, talks & Junior Ranger", items: [
+        ["route", "Ranger walks & talks", "Free", "Topics rotate by season, with the most variety late June – August. Times are posted at visitor centers."],
+        ["book", "Junior Ranger program", "All ages", "Pick up a booklet at any visitor center and return it for an award."],
+        ["tree", "Naturalist walks", "Guided", "Led by Sequoia Parks Conservancy naturalists from Wuksachi Lodge."],
+      ] },
+      { t: "plans", id: "day-plans", bg: "moss", eyebrow: "Day plans", title: "Ready-made days", desc: "Pairings we suggest. Each ticket is booked with its official seller.", items: [
+        ["Big Trees Day", "Vehicle pass + Crystal Cave tour + free seasonal shuttle", "From $57 · 1 adult", "Most popular", "crystal-cave.html"],
+        ["Family cave & grove day", "Vehicle pass + Crystal Cave for 2 adults & 2 kids", "From $101 · family of 4", "Families", "crystal-cave.html"],
+        ["Accessible big trees morning", "Vehicle pass + paved Big Trees Trail + Giant Forest Museum", "From $35 · per vehicle", "Step-free", "accessible-trails.html#big-trees-trail"],
+      ], trust: "Prices checked against NPS.gov and Sequoia Parks Conservancy · Updated Oct 9, 2026." },
+    ],
+  },
+  {
+    file: "crystal-cave.html", nav: "plan", parent: "tickets-and-tours.html", title: "Crystal Cave Tour",
+    description: "Choose a date, time and tickets for a Crystal Cave guided tour.", scripts: ["js/booking.js"],
+    sections: [
+      { t: "intro", crumbs: ["Tickets & Tours"], eyebrow: "Timed tour · Sequoia Parks Conservancy", title: "Crystal Cave Tour" },
+      { t: "booking", adult: 22, child: 11, meta: [["clock", "50 min tour"], ["route", "½-mile loop inside"], ["leaf", "About 50°F in the cave"], ["nav", "Steep ½-mile walk to the entrance"]] },
+      { t: "tips", bg: "paper", eyebrow: "Before you book", title: "Good to know", items: [
+        ["leaf", "Bring a jacket — the cave stays about 50°F."],
+        ["clock", "Arrive early for the steep half-mile walk to the entrance."],
+        ["car", "Crystal Cave Road fits vehicles up to 22 ft, trailer included."],
+        ["cal", "Book at least 36 hours ahead; tickets sell online only."],
+      ] },
+      { t: "summary", bg: "paper", trust: "Secure checkout by Sequoia Parks Conservancy, the park's official nonprofit partner. Ticket sales fund park education and restoration." },
+    ],
+  },
+  {
+    file: "tour-checkout.html", nav: "plan", parent: "crystal-cave.html", title: "Finish booking with the official seller",
+    description: "Leave this site to pay for Crystal Cave tickets with Sequoia Parks Conservancy.", scripts: ["js/booking.js"],
+    sections: [
+      { t: "intro", eyebrow: "Leaving this site", title: "Finish booking with the official seller", desc: "Payment happens on the Sequoia Parks Conservancy site." },
+      { t: "readout", text: "Sat, Jul 18 · 11:00 AM · 2 adult tickets · $44" },
+      { t: "facts", fields: [["Official ticket seller", "Sequoia Parks Conservancy — the park's official nonprofit partner. Ticket sales fund education and restoration."]] },
+      { t: "ctas", primary: "Open secure checkout", primaryIcon: "ext", secondary: "Back to Crystal Cave", secondaryIcon: "left", secondaryLeft: true },
     ],
   },
 ];

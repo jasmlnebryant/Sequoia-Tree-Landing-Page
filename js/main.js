@@ -56,7 +56,7 @@
   window.SequoiaSite.toast = showToast;
 
   const labelOf = (a) => {
-    const el = a.querySelector(".nav-row__label, .tile__label, .ring-row__label, .conditions-card__title, .menu-group__row span:nth-child(2), .btn span, .log-slice span, .inset-row span, .story-slot span");
+    const el = a.querySelector(".nav-row__label, .place__name, .tile__label, .ring-row__label, .conditions-card__title, .menu-group__row span:nth-child(2), .btn span, .log-slice span, .inset-row span, .story-slot span");
     return (el || a).textContent.replace(/\s+/g, " ").replace("→", "").trim();
   };
 
@@ -98,7 +98,12 @@
 
     if (href === "#") {
       e.preventDefault();
-      showToast(`${labelOf(a)} isn't built yet in this prototype.`);
+      showToast(`${labelOf(a)} is coming soon to this prototype.`);
+      return;
+    }
+    if (href === "#language") {
+      e.preventDefault();
+      openLang(a);
       return;
     }
     if (href.startsWith("#")) {
@@ -143,6 +148,59 @@
       if (e.key === "Escape" && drawer.classList.contains("is-open")) { setOpen(false); toggle.focus(); }
     });
     drawer.addEventListener("click", (e) => { if (e.target.closest("a[href]:not([href='#'])")) setOpen(false); });
+  }
+
+  /* ---------- Language picker ---------- */
+  const langSheet = document.getElementById("lang-sheet");
+  const LANG_KEY = "sequoia-lang";
+  const langStore = {
+    get() { try { return sessionStorage.getItem(LANG_KEY); } catch { return null; } },
+    set(v) { try { sessionStorage.setItem(LANG_KEY, v); } catch {} },
+  };
+  let langReturn = null;
+  const setLangCode = (code) => {
+    document.querySelectorAll("[data-lang-code]").forEach((el) => { el.textContent = code.toUpperCase(); });
+    const name = langSheet?.querySelector(`input[value="${code}"]`)?.closest("label")?.querySelector("[lang]")?.textContent || "English";
+    document.querySelectorAll(".lang-btn").forEach((b) => b.setAttribute("aria-label", "Language: " + name));
+  };
+  function openLang(from) {
+    if (!langSheet) return;
+    langReturn = from || document.activeElement;
+    const current = langStore.get() || "en";
+    const radio = langSheet.querySelector(`input[value="${current}"]`);
+    if (radio) radio.checked = true;
+    langSheet.hidden = false;
+    (langSheet.querySelector("input:checked") || langSheet.querySelector("input"))?.focus();
+  }
+  function closeLang() {
+    if (!langSheet || langSheet.hidden) return;
+    langSheet.hidden = true;
+    langReturn?.focus?.();
+  }
+  if (langSheet) {
+    document.querySelectorAll("[data-lang-open]").forEach((b) => b.addEventListener("click", () => openLang(b)));
+    langSheet.querySelectorAll("[data-lang-close]").forEach((b) => b.addEventListener("click", closeLang));
+    langSheet.querySelector("[data-lang-apply]")?.addEventListener("click", () => {
+      const picked = langSheet.querySelector("input:checked");
+      const code = picked ? picked.value : "en";
+      const name = picked?.closest("label")?.querySelector("[lang]")?.textContent || "English";
+      langStore.set(code);
+      setLangCode(code);
+      closeLang();
+      showToast(code === "en" ? "Showing the site in English." : `${name} selected. Translated pages are coming to this prototype.`);
+    });
+    document.addEventListener("keydown", (e) => { if (e.key === "Escape") closeLang(); });
+    setLangCode(langStore.get() || "en");
+  }
+
+  /* ---------- Header shrinks to the page title once the title scrolls away ---------- */
+  const siteHeader = document.querySelector(".site-header");
+  const pageTitle = document.querySelector(".page-title, .page-hero__title");
+  if (siteHeader && pageTitle && siteHeader.querySelector(".header-title") && "IntersectionObserver" in window) {
+    new IntersectionObserver(([entry]) => {
+      const past = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+      siteHeader.classList.toggle("is-compact", past);
+    }, { rootMargin: "-72px 0px 0px 0px" }).observe(pageTitle);
   }
 
   /* ---------- Grove switch (accessible trails) ---------- */

@@ -70,7 +70,7 @@ ${Object.entries(ICONS).map(([k, v]) => `      <symbol id="i-${k}" viewBox="0 0 
   </svg>`;
 
 /* ---------- header, menu, footer ---------- */
-function header(active, variant, back) {
+function header(active, variant, back, pageTitle) {
   if (variant === "search") {
     return `  <header class="site-header site-header--search">
     <div class="container site-header__bar">
@@ -85,15 +85,18 @@ function header(active, variant, back) {
       <div class="header-lead">
         ${back ? `<a class="back-btn" href="${back}" aria-label="Back" data-back>${icon("left", 22)}</a>` : ""}
         <a class="brand" href="index.html"><span class="brand__line">Visit the Giant</span> <span class="brand__line">Sequoias</span></a>
+        ${pageTitle ? `<p class="header-title" aria-hidden="true"><span class="header-title__kicker">${esc(SITE)}</span><span class="header-title__name">${esc(pageTitle)}</span></p>` : ""}
       </div>
 
       <nav class="utility-nav" aria-label="Utilities">
         <a class="pill-link" href="search.html">${icon("search", 18)}Search${icon("right", 16, "pill-link__arrow")}</a>
         <a class="pill-link" href="#">${icon("alert", 18)}Alerts &amp; Conditions${icon("right", 16, "pill-link__arrow")}</a>
         <a class="pill-link" href="#">${icon("map", 18)}Maps${icon("right", 16, "pill-link__arrow")}</a>
+        <button class="pill-link" type="button" data-lang-open aria-haspopup="dialog">${icon("globe", 18)}<span data-lang-code>EN</span></button>
       </nav>
 
       <div class="header-actions">
+        <button class="lang-btn" type="button" data-lang-open aria-haspopup="dialog" aria-label="Language: English">${icon("globe", 18)}<span data-lang-code>EN</span></button>
         <a class="icon-btn icon-btn--cream" href="search.html" aria-label="Search">${icon("search", 20)}</a>
         <button class="icon-btn icon-btn--sage" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-drawer" data-menu-toggle>
           <svg class="icon icon--20" aria-hidden="true" data-menu-icon><use href="#i-menu"/></svg>
@@ -129,7 +132,9 @@ ${MENU.utilities.map((l) => `          ${menuRow(esc(l))}`).join("\n")}
   </header>`;
 }
 
+const LANGS = [["en", "English", "English"], ["es", "Español", "Spanish"], ["fr", "Français", "French"], ["de", "Deutsch", "German"], ["it", "Italiano", "Italian"], ["zh", "简体中文", "Simplified Chinese"]];
 const footer = () => `  <footer class="site-footer">
+    <p class="container footer-trust">${icon("shield", 18)}<span>Visitor info checked against NPS.gov · Updated Oct 9, 2026</span></p>
     <nav class="container" aria-label="Footer">
       <ul class="footer-rows">
 ${FOOTER.map((l) => `        <li><a href="#">${esc(l)}<span aria-hidden="true">→</span></a></li>`).join("\n")}
@@ -137,7 +142,26 @@ ${FOOTER.map((l) => `        <li><a href="#">${esc(l)}<span aria-hidden="true">�
     </nav>
   </footer>
 
-  <div class="toast" role="status" aria-live="polite" data-toast hidden></div>`;
+  <div class="toast" role="status" aria-live="polite" data-toast hidden></div>
+
+  <div class="sheet lang-sheet" id="lang-sheet" role="dialog" aria-modal="true" aria-labelledby="lang-title" hidden>
+    <div class="sheet__scrim" data-lang-close></div>
+    <div class="sheet__panel">
+      <div class="sheet__head">
+        <div>
+          <p class="eyebrow">Language</p>
+          <h2 class="section-title" id="lang-title">Read this site in…</h2>
+        </div>
+        <button class="close-pill close-pill--light" type="button" data-lang-close>${icon("close", 16)}Close</button>
+      </div>
+      <fieldset class="radio-card lang-list">
+        <legend class="visually-hidden">Choose a language</legend>
+${LANGS.map(([code, native, en], i) => `        <label class="radio-row lang-row"><input type="radio" name="lang" value="${code}"${i ? "" : " checked"}><span class="radio-row__ring" aria-hidden="true"></span><span class="lang-row__text"><span lang="${code}">${native}</span>${native !== en ? `<small>${en}</small>` : ""}</span></label>`).join("\n")}
+      </fieldset>
+      <p class="guide-note">${icon("file", 20)}<span>The park's official Map &amp; Guide is available as a PDF in all six languages. Braille guides can be borrowed at visitor centers. <a ${linkAttrs("https://www.nps.gov/seki/planyourvisit/information-in-other-languages.htm")}>Download Map &amp; Guide</a></span></p>
+      <button class="btn btn--clay-pill btn--full" type="button" data-lang-apply><span>Apply language</span><span class="circle circle--cream circle--42" aria-hidden="true">${icon("right", 18)}</span></button>
+    </div>
+  </div>`;
 
 /* ---------- section pieces ---------- */
 const DARK = new Set(["bark", "moss"]);
@@ -212,6 +236,21 @@ ${c.links.map((l) => `            <li><a class="inset-row" href="#"><span>${esc(
           ${cta}
           </div>
         </article>`;
+}
+
+function trustNote(text, dark = false) {
+  return `<p class="trust-note${dark ? " trust-note--dark" : ""}">${icon("shield", 20)}<span>${esc(text)}</span></p>`;
+}
+function tourCard(b) {
+  return `<article class="card tour-card">
+        <div class="tour-card__tags"><span class="tag tag--sage">${esc(b.tag)}</span>${b.urgency ? `<span class="urgency">${icon("flame", 14)}<span>${esc(b.urgency)}</span></span>` : ""}</div>
+        <h3 class="tour-card__title">${esc(b.name)}</h3>
+        ${b.text ? `<p class="card__desc">${esc(b.text)}</p>` : ""}
+        <ul class="meta-list">${b.meta.map(([ic, l]) => `<li>${icon(ic, 16)}${esc(l)}</li>`).join("")}</ul>
+        ${b.avail ? `<p class="tour-card__avail">${icon("cal", 18)}<span>${esc(b.avail)}</span></p>` : ""}
+        <a class="btn btn--clay-pill btn--full" href="${b.href}"><span>${esc(b.cta)}</span><span class="circle circle--cream circle--42" aria-hidden="true">${icon("right", 18)}</span></a>
+        ${b.note ? `<p class="tour-card__note">${esc(b.note)}</p>` : ""}
+      </article>`;
 }
 
 const R = {
@@ -299,6 +338,67 @@ ${b.cards.map(([eb, text, action, ic]) => `        <div class="reflect">
         </div>`).join("\n")}
       </div>`,
 
+  /* ----- tickets, tours and booking ----- */
+  chips: (b) => `<nav class="jump-chips" aria-label="${esc(b.label)}">
+${b.items.map(([l, h], i) => `        <a class="jump-chip${i ? "" : " is-active"}" href="${h}">${esc(l)}</a>`).join("\n")}
+      </nav>`,
+
+  passes: (b) => `${sectionHead(b, b.bg)}
+      <div class="card pass-list">
+${b.items.map(([ic, l, p]) => `        <a class="pass-row" ${linkAttrs(b.href)}><span class="pass-row__icon">${icon(ic, 20)}</span><span class="pass-row__text"><span class="pass-row__label">${esc(l)}</span><span class="pass-row__price">${esc(p)}</span></span>${icon("right", 18, "pass-row__arrow")}</a>`).join("\n")}
+      </div>
+      ${b.cta ? `<a class="btn btn--clay-pill btn--full" ${linkAttrs(hrefFor(b.cta))}><span>${esc(b.cta)}</span><span class="circle circle--cream circle--42" aria-hidden="true">${icon("ext", 18)}</span></a>` : ""}`,
+
+  tour: (b) => `${sectionHead(b, b.bg)}
+      ${tourCard(b)}`,
+
+  programs: (b) => `${sectionHead(b, b.bg)}
+      <ul class="program-list">
+${b.items.map(([ic, title, tag, desc]) => `        <li class="program"><span class="program__icon">${icon(ic, 20)}</span><div><h3 class="program__title">${esc(title)}</h3><span class="tag tag--inset">${esc(tag)}</span><p class="program__desc">${esc(desc)}</p></div></li>`).join("\n")}
+      </ul>`,
+
+  plans: (b) => `${sectionHead(b, b.bg)}
+      <ul class="plan-list">
+${b.items.map(([title, inc, price, tag, href]) => `        <li><a class="plan" href="${href}"><span class="plan__top"><span class="plan__title">${esc(title)}</span><span class="tag tag--sage">${esc(tag)}</span></span><span class="plan__inc">${esc(inc)}</span><span class="plan__bottom"><span class="plan__price">${esc(price)}</span><span class="circle circle--clay circle--40" aria-hidden="true">${icon("right", 18)}</span></span></a></li>`).join("\n")}
+      </ul>
+      ${b.trust ? trustNote(b.trust, DARK.has(b.bg)) : ""}`,
+
+  trust: (b) => trustNote(b.text, DARK.has(b.bg)),
+
+  tips: (b) => `${sectionHead(b, b.bg)}
+      <ul class="tips">
+${b.items.map(([ic, t]) => `        <li><span class="tips__icon">${icon(ic, 18)}</span><span>${esc(t)}</span></li>`).join("\n")}
+      </ul>`,
+
+  booking: (b) => `<div class="booking" data-booking data-price-adult="${b.adult}" data-price-child="${b.child}">
+        <ul class="meta-list">${b.meta.map(([ic, l]) => `<li>${icon(ic, 16)}${esc(l)}</li>`).join("")}</ul>
+        <section class="card booking-step" aria-labelledby="step-date">
+          <h2 class="step-label" id="step-date">1 · Choose a date</h2>
+          <div class="date-row" role="radiogroup" aria-labelledby="step-date" data-dates></div>
+          <p class="step-note">July 2026 · sample availability for this prototype</p>
+        </section>
+        <section class="card booking-step" aria-labelledby="step-time">
+          <div class="step-head"><h2 class="step-label" id="step-time">2 · Choose a time</h2><span class="urgency" data-urgency hidden>${icon("flame", 14)}<span></span></span></div>
+          <div class="slot-grid" role="radiogroup" aria-labelledby="step-time" data-slots></div>
+        </section>
+        <section class="card booking-step" aria-labelledby="step-qty">
+          <h2 class="step-label" id="step-qty">3 · Tickets</h2>
+          ${[["adult", "Adult", b.adult, 2], ["child", "Child", b.child, 0]].map(([k, l, p, q]) => `<div class="qty" data-qty="${k}">
+            <div><p class="qty__label">${l}</p><p class="qty__price">$${p} each</p></div>
+            <div class="stepper"><button class="stepper__btn" type="button" data-step="-1" aria-label="Fewer ${l.toLowerCase()} tickets">${icon("minus", 18)}</button><output class="stepper__value" aria-live="polite">${q}</output><button class="stepper__btn stepper__btn--add" type="button" data-step="1" aria-label="More ${l.toLowerCase()} tickets">${icon("plus", 18)}</button></div>
+          </div>`).join("\n          ")}
+          <p class="urgency-line" data-booking-note hidden>${icon("flame", 16)}<span></span></p>
+        </section>
+      </div>`,
+
+  summary: (b) => `<div class="summary-card" data-booking-summary>
+        <div class="summary-card__row"><div><p class="summary-card__when" data-summary-when>Choose a time</p><p class="summary-card__what" data-summary-what>2 adult tickets</p></div><p class="summary-card__total" data-summary-total>$44</p></div>
+        <a class="btn btn--cream-pill btn--full" href="tour-checkout.html" data-checkout><span>Continue to secure checkout</span><span class="circle circle--clay circle--42" aria-hidden="true">${icon("right", 18)}</span></a>
+      </div>
+      ${b.trust ? trustNote(b.trust) : ""}`,
+
+  readout: (b) => `<p class="booking-readout" data-booking-readout>${icon("ticket", 18)}<span>${esc(b.text)}</span></p>`,
+
   segment: (b) => {
     const first = b.options[0][0];
     return `<div class="segment" role="tablist" aria-label="Choose a grove" data-segment="${b.name}">
@@ -318,7 +418,7 @@ function renderSections(sections) {
     const bg = b.bg || "sand";
     const first = i === 0;
     const texture = bg === "bark" ? " tex-heartwood" : bg === "moss" ? " tex-moss" : first && b.t !== "hero" ? " tex-sand" : "";
-    const id = b.title && b.t !== "facts" ? ` id="${slug(b.title)}"` : "";
+    const id = b.id ? ` id="${b.id}"` : b.title && b.t !== "facts" ? ` id="${slug(b.title)}"` : "";
     const cls = `block block--${b.t} bg-${bg}${texture}${first ? " block--first" : ""}${DARK.has(bg) ? " on-dark" : ""}`;
     const inner = `\n      <div class="container">\n      ${R[b.t](b)}\n      </div>\n    `;
     if (bg !== prev) {
@@ -356,7 +456,7 @@ ${SPRITE}
   <a class="skip-link" href="#main">Skip to content</a>
 
   <!-- build:header -->
-${header(nav, variant, back)}
+${header(nav, variant, back, variant ? null : title)}
   <!-- /build:header -->
 
   <main id="main" class="page-main">${main}

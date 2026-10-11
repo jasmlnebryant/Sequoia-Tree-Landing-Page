@@ -67,15 +67,18 @@
       <div class="header-lead">
         
         <a class="brand" href="index.html"><span class="brand__line">Visit the Giant</span> <span class="brand__line">Sequoias</span></a>
+        
       </div>
 
       <nav class="utility-nav" aria-label="Utilities">
         <a class="pill-link" href="search.html"><svg class="icon icon--18" aria-hidden="true"><use href="#i-search"/></svg>Search<svg class="icon icon--16 pill-link__arrow" aria-hidden="true"><use href="#i-right"/></svg></a>
         <a class="pill-link" href="#"><svg class="icon icon--18" aria-hidden="true"><use href="#i-alert"/></svg>Alerts &amp; Conditions<svg class="icon icon--16 pill-link__arrow" aria-hidden="true"><use href="#i-right"/></svg></a>
         <a class="pill-link" href="#"><svg class="icon icon--18" aria-hidden="true"><use href="#i-map"/></svg>Maps<svg class="icon icon--16 pill-link__arrow" aria-hidden="true"><use href="#i-right"/></svg></a>
+        <button class="pill-link" type="button" data-lang-open aria-haspopup="dialog"><svg class="icon icon--18" aria-hidden="true"><use href="#i-globe"/></svg><span data-lang-code>EN</span></button>
       </nav>
 
       <div class="header-actions">
+        <button class="lang-btn" type="button" data-lang-open aria-haspopup="dialog" aria-label="Language: English"><svg class="icon icon--18" aria-hidden="true"><use href="#i-globe"/></svg><span data-lang-code>EN</span></button>
         <a class="icon-btn icon-btn--cream" href="search.html" aria-label="Search"><svg class="icon icon--20" aria-hidden="true"><use href="#i-search"/></svg></a>
         <button class="icon-btn icon-btn--sage" type="button" aria-label="Open menu" aria-expanded="false" aria-controls="menu-drawer" data-menu-toggle>
           <svg class="icon icon--20" aria-hidden="true" data-menu-icon><use href="#i-menu"/></svg>
@@ -98,11 +101,12 @@
           <p class="menu-group__head"><span>Plan Your Visit</span><span class="circle circle--clay circle--32" aria-hidden="true"><svg class="icon icon--16" aria-hidden="true"><use href="#i-minus"/></svg></span></p>
           <ul class="menu-group__list">
             <li><a class="menu-group__row" href="fees-and-passes.html"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-ticket"/></svg></span><span>Entrance Fees &amp; Passes</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+            <li><a class="menu-group__row" href="tickets-and-tours.html"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-ticket"/></svg></span><span>Tickets &amp; Tours</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
             <li><a class="menu-group__row" href="hours-and-seasons.html"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-clock"/></svg></span><span>Hours &amp; Seasons</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
             <li><a class="menu-group__row" href="#"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-nav"/></svg></span><span>Directions &amp; Transportation</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
             <li><a class="menu-group__row" href="accessible-trails.html"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-access"/></svg></span><span>Accessibility</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
             <li><a class="menu-group__row" href="#"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-food"/></svg></span><span>Food &amp; Places to Stay</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
-            <li><a class="menu-group__row" href="#"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-shield"/></svg></span><span>Safety &amp; Visitor Rules</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+            <li><a class="menu-group__row" href="#"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-shield"/></svg></span><span>Safety &amp; Visitor Guidelines</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
           </ul>
           <a class="menu-group__overview" href="plan-your-visit.html">Plan Your Visit overview<svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a>
         </div>
@@ -116,6 +120,7 @@
           <li><a class="menu-row" href="search.html">Search<svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
           <li><a class="menu-row" href="#">Alerts &amp; Conditions<svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
           <li><a class="menu-row" href="#">Maps<svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+          <li><a class="menu-row" href="#language">Language Resources<svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
           <li><a class="menu-row" href="index.html">Home<svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
         </ul>
       </div>
@@ -195,6 +200,16 @@
         <input class="search__input" id="site-search" name="q" type="search" autocomplete="off" placeholder="Search trees, trails, passes, accessibility…">
         <button class="search__submit" type="submit">Search</button>
       </form>
+      <div class="container search-suggest">
+        <p class="search-suggest__label">Popular searches</p>
+        <ul class="suggest-chips">
+          <li><a class="suggest-chip suggest-chip--hot" href="crystal-cave.html"><svg class="icon icon--14" aria-hidden="true"><use href="#i-flame"/></svg>Crystal Cave tickets</a></li>
+          <li><a class="suggest-chip" href="hours-and-seasons.html"><svg class="icon icon--14" aria-hidden="true"><use href="#i-search"/></svg>Hours today</a></li>
+          <li><a class="suggest-chip" href="search.html?q=parking"><svg class="icon icon--14" aria-hidden="true"><use href="#i-search"/></svg>Parking</a></li>
+          <li><a class="suggest-chip" href="search.html?q=wheelchair%20access"><svg class="icon icon--14" aria-hidden="true"><use href="#i-search"/></svg>Wheelchair access</a></li>
+          <li><a class="suggest-chip" href="search.html?q=pets%20on%20trails"><svg class="icon icon--14" aria-hidden="true"><use href="#i-search"/></svg>Pets on trails</a></li>
+        </ul>
+      </div>
     </section>
 
     <!-- Planning shortcuts -->
@@ -210,6 +225,40 @@
           <li><a class="tile" href="#"><span class="tile__top"><span class="tile__icon"><svg class="icon icon--24"><use href="#i-nav"/></svg></span><svg class="icon icon--16 tile__arrow"><use href="#i-upright"/></svg></span><span class="tile__label">Directions</span></a></li>
           <li><a class="tile" href="accessible-trails.html"><span class="tile__top"><span class="tile__icon"><svg class="icon icon--24"><use href="#i-access"/></svg></span><svg class="icon icon--16 tile__arrow"><use href="#i-upright"/></svg></span><span class="tile__label">Accessibility</span></a></li>
         </ul>
+      </div>
+    </section>
+
+    <!-- Tickets & tours -->
+    <section class="section book" id="book" aria-labelledby="book-title">
+      <div class="container book__grid">
+        <header class="section-header book__header">
+          <p class="eyebrow">Tickets &amp; tours</p>
+          <h2 class="section-title" id="book-title">Book your visit</h2>
+        </header>
+        <article class="card tour-card book__tour">
+          <div class="tour-card__tags"><span class="tag tag--sage">Timed tour</span><span class="urgency"><svg class="icon icon--14" aria-hidden="true"><use href="#i-flame"/></svg><span>Only 2 left at 11:00</span></span></div>
+          <h3 class="tour-card__title">Crystal Cave Guided Tour</h3>
+          <p class="card__desc">A 50-minute guided walk through a marble cave, led by Sequoia Parks Conservancy guides.</p>
+          <ul class="meta-list"><li><svg class="icon icon--16" aria-hidden="true"><use href="#i-clock"/></svg>50 min</li><li><svg class="icon icon--16" aria-hidden="true"><use href="#i-ticket"/></svg>$22 adult · $11 child</li><li><svg class="icon icon--16" aria-hidden="true"><use href="#i-pin"/></svg>Crystal Cave Rd</li></ul>
+          <p class="step-label">Sat, Jul 18 · next open times</p>
+          <ul class="slot-row"><li><a class="slot" href="crystal-cave.html?time=10:00"><strong>10:00</strong><span>4 left</span></a></li><li><a class="slot slot--low" href="crystal-cave.html?time=11:00"><strong>11:00</strong><span>2 left</span></a></li><li><a class="slot" href="crystal-cave.html?time=12:00"><strong>12:00</strong><span>Open</span></a></li><li><a class="slot" href="crystal-cave.html?time=1:00"><strong>1:00</strong><span>Open</span></a></li></ul>
+          <a class="btn btn--clay-pill btn--full" href="crystal-cave.html"><span>Choose a time</span><span class="circle circle--cream circle--42" aria-hidden="true"><svg class="icon icon--18" aria-hidden="true"><use href="#i-right"/></svg></span></a>
+          <p class="tour-card__note">Sold online only · book at least 36 hours ahead</p>
+        </article>
+        <div class="book__side">
+        <ul class="nav-rows">
+          <li><a class="nav-row" href="fees-and-passes.html"><span class="nav-row__icon"><svg class="icon icon--20" aria-hidden="true"><use href="#i-ticket"/></svg></span><span class="nav-row__text"><span class="nav-row__label">Vehicle entrance pass</span><span class="nav-row__meta">$35 · valid 7 days in both parks · arrive any time</span></span><svg class="icon icon--18 nav-row__arrow" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+          <li><a class="nav-row" href="tickets-and-tours.html#free-programs"><span class="nav-row__icon"><svg class="icon icon--20" aria-hidden="true"><use href="#i-route"/></svg></span><span class="nav-row__text"><span class="nav-row__label">Free ranger walks</span><span class="nav-row__meta">Free · seasonal schedules at visitor centers</span></span><svg class="icon icon--18 nav-row__arrow" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+          <li><a class="nav-row" href="#"><span class="nav-row__icon"><svg class="icon icon--20" aria-hidden="true"><use href="#i-car"/></svg></span><span class="nav-row__text"><span class="nav-row__label">Sequoia Shuttle from Visalia</span><span class="nav-row__meta">Reserve ahead · drops off at Giant Forest Museum</span></span><svg class="icon icon--18 nav-row__arrow" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+        </ul>
+        <a class="plan plan--feature" href="tickets-and-tours.html#day-plans">
+          <span class="eyebrow eyebrow--sage">Suggested day · pass + tour</span>
+          <span class="plan__title">Big Trees Day</span>
+          <span class="plan__inc">Vehicle pass + Crystal Cave tour, with the free seasonal shuttle linking General Sherman, Moro Rock and the museum.</span>
+          <span class="plan__bottom"><span class="plan__price">From $57 for one adult</span><span class="circle circle--clay circle--40" aria-hidden="true"><svg class="icon icon--18" aria-hidden="true"><use href="#i-right"/></svg></span></span>
+        </a>
+        <p class="trust-note"><svg class="icon icon--20" aria-hidden="true"><use href="#i-shield"/></svg><span>Tickets come only from Recreation.gov and Sequoia Parks Conservancy, the park's official nonprofit partner.</span></p>
+        </div>
       </div>
     </section>
 
@@ -280,7 +329,27 @@
         <ul class="nav-rows">
           <li><a class="nav-row" href="#"><span class="nav-row__icon"><svg class="icon icon--20"><use href="#i-route"/></svg></span><span class="nav-row__label">Trails &amp; Walks</span><svg class="icon icon--18 nav-row__arrow"><use href="#i-right"/></svg></a></li>
           <li><a class="nav-row" href="#"><span class="nav-row__icon"><svg class="icon icon--20"><use href="#i-cal"/></svg></span><span class="nav-row__label">Suggested Itineraries</span><svg class="icon icon--18 nav-row__arrow"><use href="#i-right"/></svg></a></li>
-          <li><a class="nav-row" href="#"><span class="nav-row__icon"><svg class="icon icon--20"><use href="#i-shield"/></svg></span><span class="nav-row__label">Ranger Programs &amp; Events</span><svg class="icon icon--18 nav-row__arrow"><use href="#i-right"/></svg></a></li>
+          <li><a class="nav-row" href="tickets-and-tours.html#free-programs"><span class="nav-row__icon"><svg class="icon icon--20"><use href="#i-ticket"/></svg></span><span class="nav-row__label">Tours &amp; Ranger Programs</span><svg class="icon icon--18 nav-row__arrow"><use href="#i-right"/></svg></a></li>
+        </ul>
+      </div>
+    </section>
+
+    <!-- In the area -->
+    <section class="section area" aria-labelledby="area-title">
+      <div class="container area__head">
+        <header class="section-header">
+          <p class="eyebrow">Nearby</p>
+          <h2 class="section-title" id="area-title">In the area</h2>
+        </header>
+        <a class="text-link" href="#">Map<svg class="icon icon--18" aria-hidden="true"><use href="#i-map"/></svg></a>
+      </div>
+      <div class="container">
+        <ul class="h-scroll places" aria-label="Places near Giant Forest">
+          <li><a class="place" href="#"><span class="place__thumb place__thumb--moss-card"><svg class="icon icon--28" aria-hidden="true"><use href="#i-nav"/></svg></span><span class="place__cat">Viewpoint</span><span class="place__name">Moro Rock</span><span class="place__dist"><svg class="icon icon--14" aria-hidden="true"><use href="#i-pin"/></svg>350+ stairs to the summit</span></a></li>
+          <li><a class="place" href="#"><span class="place__thumb place__thumb--moss"><svg class="icon icon--28" aria-hidden="true"><use href="#i-leaf"/></svg></span><span class="place__cat">Meadow &amp; picnic</span><span class="place__name">Crescent Meadow</span><span class="place__dist"><svg class="icon icon--14" aria-hidden="true"><use href="#i-pin"/></svg>2.6 mi from Giant Forest Museum</span></a></li>
+          <li><a class="place" href="#"><span class="place__thumb place__thumb--band"><svg class="icon icon--28" aria-hidden="true"><use href="#i-food"/></svg></span><span class="place__cat">Food &amp; groceries</span><span class="place__name">Lodgepole Market &amp; Grill</span><span class="place__dist"><svg class="icon icon--14" aria-hidden="true"><use href="#i-pin"/></svg>About a 10 min drive</span></a></li>
+          <li><a class="place" href="#"><span class="place__thumb place__thumb--moss-ink"><svg class="icon icon--28" aria-hidden="true"><use href="#i-building"/></svg></span><span class="place__cat">Stay &amp; dine</span><span class="place__name">Wuksachi Lodge</span><span class="place__dist"><svg class="icon icon--14" aria-hidden="true"><use href="#i-pin"/></svg>Closest lodge to Giant Forest</span></a></li>
+          <li><a class="place" href="#"><span class="place__thumb place__thumb--clay"><svg class="icon icon--28" aria-hidden="true"><use href="#i-home"/></svg></span><span class="place__cat">Gateway town</span><span class="place__name">Three Rivers</span><span class="place__dist"><svg class="icon icon--14" aria-hidden="true"><use href="#i-pin"/></svg>Just outside the park entrance</span></a></li>
         </ul>
       </div>
     </section>
@@ -315,7 +384,7 @@
               <span class="ring-row__label">Alerts &amp; Conditions</span><svg class="icon icon--18 ring-row__arrow"><use href="#i-right"/></svg></a></li>
             <li><a class="ring-row" href="#">
               <svg class="ring-marker" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="16.25" fill="none" stroke="#B5582F" stroke-width="1.5"/><circle cx="17" cy="17" r="11.75" fill="none" stroke="#B5582F" stroke-opacity=".8" stroke-width="1.5"/><circle cx="17" cy="17" r="7.25" fill="#B5582F" stroke="#B5582F" stroke-opacity=".6" stroke-width="1.5"/></svg>
-              <span class="ring-row__label">Safety &amp; Visitor Rules</span><svg class="icon icon--18 ring-row__arrow"><use href="#i-right"/></svg></a></li>
+              <span class="ring-row__label">Safety &amp; Visitor Guidelines</span><svg class="icon icon--18 ring-row__arrow"><use href="#i-right"/></svg></a></li>
             <li><a class="ring-row" href="#">
               <svg class="ring-marker" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="16.25" fill="none" stroke="#B5582F" stroke-width="1.5"/><circle cx="17" cy="17" r="11.75" fill="none" stroke="#B5582F" stroke-opacity=".8" stroke-width="1.5"/><circle cx="17" cy="17" r="7.25" fill="none" stroke="#B5582F" stroke-opacity=".6" stroke-width="1.5"/><circle cx="17" cy="17" r="2.75" fill="#B5582F" stroke="#B5582F" stroke-opacity=".4" stroke-width="1.5"/></svg>
               <span class="ring-row__label">Maps &amp; Offline Resources</span><svg class="icon icon--18 ring-row__arrow"><use href="#i-right"/></svg></a></li>
@@ -327,15 +396,21 @@
     <!-- Visitor stories (moss band with log slices) -->
     <div class="band-wrap band-wrap--paper">
       <section class="band band--moss stories" aria-labelledby="stories-title">
-        <div class="container stories__row">
+        <div class="container stories__col">
           <header class="section-header section-header--dark stories__header">
             <p class="eyebrow eyebrow--sage">Community</p>
             <h2 class="section-title" id="stories-title">Visitor stories</h2>
+            <p class="section-desc">Shared with #VisitTheGiants · sample posts</p>
           </header>
-          <ul class="log-slices">
-            <li><a class="log-slice" href="#"><svg class="icon icon--24"><use href="#i-image"/></svg><span>Visitor photo</span></a></li>
-            <li><a class="log-slice" href="#"><svg class="icon icon--24"><use href="#i-edit"/></svg><span>Visitor story</span></a></li>
+          <ul class="h-scroll posts" aria-label="Visitor posts">
+            <li class="post"><span class="post__photo"><svg class="icon icon--28" aria-hidden="true"><use href="#i-image"/></svg></span><span class="post__place"><svg class="icon icon--14" aria-hidden="true"><use href="#i-pin"/></svg>General Sherman Tree</span><blockquote class="post__quote">“Stood at the base of General Sherman at 8 a.m. with hardly anyone around. Worth the early start.”</blockquote><span class="post__handle">@sierra.wanders</span></li>
+            <li class="post"><span class="post__photo"><svg class="icon icon--28" aria-hidden="true"><use href="#i-image"/></svg></span><span class="post__place"><svg class="icon icon--14" aria-hidden="true"><use href="#i-pin"/></svg>Giant Forest Museum</span><blockquote class="post__quote">“The kids finished their Junior Ranger booklets at the museum. Best souvenir of the trip.”</blockquote><span class="post__handle">@familyof4.outdoors</span></li>
+            <li class="post"><span class="post__photo"><svg class="icon icon--28" aria-hidden="true"><use href="#i-image"/></svg></span><span class="post__place"><svg class="icon icon--14" aria-hidden="true"><use href="#i-pin"/></svg>Crystal Cave</span><blockquote class="post__quote">“Bring a jacket — the cave stays around 50°F even in July. Totally magical inside.”</blockquote><span class="post__handle">@lens.and.lichen</span></li>
           </ul>
+          <div class="actions">
+            <a class="btn btn--cream" href="#"><span>Share your visit</span><svg class="icon icon--18" aria-hidden="true"><use href="#i-camera"/></svg></a>
+            <a class="btn btn--outline-light" href="#"><span>See all stories</span><svg class="icon icon--18" aria-hidden="true"><use href="#i-right"/></svg></a>
+          </div>
         </div>
       </section>
     </div>
@@ -343,18 +418,43 @@
 
   <!-- build:footer -->
   <footer class="site-footer">
+    <p class="container footer-trust"><svg class="icon icon--18" aria-hidden="true"><use href="#i-shield"/></svg><span>Visitor info checked against NPS.gov · Updated Oct 9, 2026</span></p>
     <nav class="container" aria-label="Footer">
       <ul class="footer-rows">
         <li><a href="index.html">Home<span aria-hidden="true">→</span></a></li>
         <li><a href="#">Visitor Help<span aria-hidden="true">→</span></a></li>
         <li><a href="#">Contact a Ranger<span aria-hidden="true">→</span></a></li>
-        <li><a href="#">Language Resources<span aria-hidden="true">→</span></a></li>
+        <li><a href="#language">Language Resources<span aria-hidden="true">→</span></a></li>
         <li><a href="https://www.nps.gov/seki/" target="_blank" rel="noopener">Official NPS Sources<span aria-hidden="true">→</span></a></li>
       </ul>
     </nav>
   </footer>
 
   <div class="toast" role="status" aria-live="polite" data-toast hidden></div>
+
+  <div class="sheet lang-sheet" id="lang-sheet" role="dialog" aria-modal="true" aria-labelledby="lang-title" hidden>
+    <div class="sheet__scrim" data-lang-close></div>
+    <div class="sheet__panel">
+      <div class="sheet__head">
+        <div>
+          <p class="eyebrow">Language</p>
+          <h2 class="section-title" id="lang-title">Read this site in…</h2>
+        </div>
+        <button class="close-pill close-pill--light" type="button" data-lang-close><svg class="icon icon--16" aria-hidden="true"><use href="#i-close"/></svg>Close</button>
+      </div>
+      <fieldset class="radio-card lang-list">
+        <legend class="visually-hidden">Choose a language</legend>
+        <label class="radio-row lang-row"><input type="radio" name="lang" value="en" checked><span class="radio-row__ring" aria-hidden="true"></span><span class="lang-row__text"><span lang="en">English</span></span></label>
+        <label class="radio-row lang-row"><input type="radio" name="lang" value="es"><span class="radio-row__ring" aria-hidden="true"></span><span class="lang-row__text"><span lang="es">Español</span><small>Spanish</small></span></label>
+        <label class="radio-row lang-row"><input type="radio" name="lang" value="fr"><span class="radio-row__ring" aria-hidden="true"></span><span class="lang-row__text"><span lang="fr">Français</span><small>French</small></span></label>
+        <label class="radio-row lang-row"><input type="radio" name="lang" value="de"><span class="radio-row__ring" aria-hidden="true"></span><span class="lang-row__text"><span lang="de">Deutsch</span><small>German</small></span></label>
+        <label class="radio-row lang-row"><input type="radio" name="lang" value="it"><span class="radio-row__ring" aria-hidden="true"></span><span class="lang-row__text"><span lang="it">Italiano</span><small>Italian</small></span></label>
+        <label class="radio-row lang-row"><input type="radio" name="lang" value="zh"><span class="radio-row__ring" aria-hidden="true"></span><span class="lang-row__text"><span lang="zh">简体中文</span><small>Simplified Chinese</small></span></label>
+      </fieldset>
+      <p class="guide-note"><svg class="icon icon--20" aria-hidden="true"><use href="#i-file"/></svg><span>The park's official Map &amp; Guide is available as a PDF in all six languages. Braille guides can be borrowed at visitor centers. <a href="https://www.nps.gov/seki/planyourvisit/information-in-other-languages.htm" target="_blank" rel="noopener">Download Map &amp; Guide</a></span></p>
+      <button class="btn btn--clay-pill btn--full" type="button" data-lang-apply><span>Apply language</span><span class="circle circle--cream circle--42" aria-hidden="true"><svg class="icon icon--18" aria-hidden="true"><use href="#i-right"/></svg></span></button>
+    </div>
+  </div>
   <!-- /build:footer -->
 </body>
 </html>

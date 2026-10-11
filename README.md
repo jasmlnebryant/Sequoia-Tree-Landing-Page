@@ -80,6 +80,9 @@ I directed the design decisions; Claude generated options and did the heavy lift
 | People & History | `people-and-history.html` | 11 |
 | Search (entry, autocomplete, results, filters, no results) | `search.html` | 12–17, 19 |
 | Accessible Trails & Routes | `accessible-trails.html` | 18 |
+| Tickets & Tours (passes, timed tours, free programs, day plans) | `tickets-and-tours.html` | 20 (revised) |
+| Crystal Cave: choose a date, time and tickets | `crystal-cave.html` | 21 (revised) |
+| Tour checkout handoff | `tour-checkout.html` | 24 (revised) |
 
 Try searching for **tickets**, **wheelchair access** or **tree elevator** to see the search states.
 

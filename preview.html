@@ -421,7 +421,7 @@
 
       function updateChrome(title) {
         const href = entries[index] || "index.html";
-        const path = href.replace(/^index\.html/, "").replace(/\.html/, "").replace(/#.*$/, "");
+        const path = href.replace(/^index\.html/, "").replace(/\.html/, "").replace(/[?#].*$/, "");
         document.querySelectorAll("[data-host]").forEach((el) => { el.textContent = HOST; });
         document.querySelectorAll("[data-path]").forEach((el) => { el.textContent = path ? "/" + path : ""; });
         document.querySelectorAll('[data-nav="back"]').forEach((b) => { b.disabled = index <= 0; });

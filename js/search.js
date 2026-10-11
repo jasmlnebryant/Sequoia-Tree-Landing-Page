@@ -17,12 +17,14 @@
   /* ---------- Index ---------- */
   const VI = "Visitor Information";
   const ENTRIES = [
+    { title: "Tickets & Tours", desc: "Buy entrance passes, book Crystal Cave time slots and find free ranger programs and day plans.", type: VI, loc: "Park-wide", href: "tickets-and-tours.html",
+      kw: "ticket tickets buy book booking tours tour packages package passes pass reservation reservations day plans" },
     { title: "Entrance Fees & Passes", desc: "Compare entry options and find official purchase information.", type: VI, loc: "Park-wide", href: "fees-and-passes.html",
       kw: "fees fee passes pass ticket tickets entrance price prices cost annual purchase buy america beautiful" },
-    { title: "Entry Reservation Information", desc: "Check which arrangements apply to entering the parks and booking activities.", type: VI, loc: "Park-wide", href: "#",
-      kw: "ticket tickets reservation reservations entry booking book permit" },
+    { title: "Crystal Cave Guided Tour", desc: "A 50-minute guided cave tour with timed entry. $22 adult · $11 child. Sold online only.", type: "Tour", loc: "Sequoia NP", href: "crystal-cave.html", urgency: "2 left today",
+      kw: "crystal cave tour tours ticket tickets timed time slot booking book guided marble kids family" },
     { title: "Hours & Seasons", desc: "Check access information before choosing when to visit.", type: VI, loc: "Park-wide", href: "hours-and-seasons.html",
-      kw: "ticket tickets hours open opening seasons season winter summer snow roads closures time" },
+      kw: "ticket tickets today hours open opening seasons season winter summer snow roads closures time" },
     { title: "Accessible Trails & Routes", desc: "Compare surfaces, steps and route details to plan for your access needs. Paved options include the Big Trees Trail and the Sherman Tree accessible trail.", type: VI, loc: "Park-wide", href: "accessible-trails.html",
       kw: "wheelchair access accessible accessibility trails trail routes route paved mobility step-free" },
     { title: "General Sherman: Accessible Approach", desc: "Review the approach to the landmark, including parking and route features. Paved, about 500 ft from the accessible lot on the Generals Highway.", type: "Landmark", loc: "Giant Forest", href: "general-sherman-tree.html#accessible-approach",
@@ -47,15 +49,28 @@
       kw: "sequoia sequoias about ecology fire climate conservation history facts" },
     { title: "People & History", desc: "Indigenous connections, the protection of the groves and the history of the parks.", type: "Learning", loc: "Park-wide", href: "people-and-history.html",
       kw: "sequoia history people indigenous protection soldiers park" },
+    { title: "Ranger Walks & Junior Ranger", desc: "Free ranger walks and talks, plus the Junior Ranger booklet at any visitor center.", type: "Tour", loc: "Park-wide", href: "tickets-and-tours.html#free-programs",
+      kw: "ranger rangers walk walks talk talks program programs junior kids children free events tours guided" },
+    { title: "Ready-made Day Plans", desc: "Pairings like Big Trees Day: a vehicle pass plus a Crystal Cave tour and the free shuttle.", type: "Tour", loc: "Park-wide", href: "tickets-and-tours.html#day-plans",
+      kw: "package packages day plan plans itinerary itineraries bundle family tours" },
+    { title: "Moro Rock", desc: "A granite dome with 350+ stairs to the summit. Free seasonal shuttle Route 2.", type: "Nearby", loc: "Giant Forest", href: "index.html#area-title",
+      kw: "moro rock view viewpoint stairs climb nearby area" },
+    { title: "Lodgepole Market & Grill", desc: "Groceries and grill meals about a 10 minute drive from Giant Forest Museum.", type: "Nearby", loc: "Giant Forest", href: "index.html#area-title",
+      kw: "food eat restaurant grill market groceries lodgepole nearby" },
+    { title: "Language Options", desc: "The park's Map & Guide comes in Spanish, French, German, Italian and Simplified Chinese. Braille guides at visitor centers.", type: VI, loc: "Park-wide", href: "#language",
+      kw: "language languages translation spanish espanol french german italian chinese braille international" },
+    { title: "Park Shuttles", desc: "Free seasonal shuttles link Giant Forest stops; the Sequoia Shuttle from Visalia needs a reservation.", type: VI, loc: "Giant Forest", href: "#",
+      kw: "shuttle shuttles bus times schedule transit visalia free route moro sherman" },
     { title: "Plan Your Visit", desc: "Fees, hours, directions, accessibility and safety in one place.", type: VI, loc: "Park-wide", href: "plan-your-visit.html",
       kw: "plan visit trip planning essentials" },
   ];
   ENTRIES.forEach((e) => { e.words = (e.title + " " + e.kw).toLowerCase().split(/[^a-z0-9-]+/).filter(Boolean); });
 
+  const TRENDING = [["Crystal Cave tickets", true], ["Hours today", false], ["Shuttle times", false], ["Parking at Sherman", false]];
   const SUGGESTED = ["Entrance passes", "Hours and seasons", "General Sherman parking", "Wheelchair access", "Sequoia history"];
-  const POOL = ["tickets", "ticket prices", "entrance passes", "hours and seasons", "general sherman parking", "wheelchair access",
+  const POOL = ["tickets", "ticket prices", "crystal cave tickets", "tours", "ranger walks", "day plans", "language", "moro rock", "food", "entrance passes", "hours and seasons", "general sherman parking", "wheelchair access",
     "accessible trails", "sequoia history", "giant forest", "grant grove", "big trees trail", "congress trail"];
-  const RELATED = [["Accessible Trails & Routes", "accessible-trails.html"], ["Parking & Mobility Support", "#"], ["Visitor Help", "#"]];
+  const RELATED = [["Accessible Trails & Routes", "accessible-trails.html"], ["Tickets & Tours", "tickets-and-tours.html"], ["Parking & Mobility Support", "#"], ["Visitor Help", "#"]];
   const STOP = new Set(["and", "the", "of", "for", "to", "a", "an", "in", "at", "near"]);
 
   const tokens = (q) => q.toLowerCase().split(/[^a-z0-9-]+/).filter((t) => t && !STOP.has(t));
@@ -75,7 +90,7 @@
 
   const esc = (s) => String(s).replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
   const icon = (name, size = 18) => `<svg class="icon icon--${size}" aria-hidden="true"><use href="#i-${name}"/></svg>`;
-  const ICONS = { Trail: "route", Landmark: "tree", Grove: "tree", Learning: "leaf" };
+  const ICONS = { Trail: "route", Landmark: "tree", Grove: "tree", Learning: "leaf", Tour: "ticket", Nearby: "pin" };
   const iconFor = (e) => ICONS[e.type] || (/access|wheelchair/i.test(e.title) ? "access" : /parking/i.test(e.title) ? "car" : /hour/i.test(e.title) ? "clock" : /facilit/i.test(e.title) ? "building" : "ticket");
   const quote = (q) => `‘${esc(q)}’`;
 
@@ -95,12 +110,17 @@
     const shown = typed && lower.startsWith(typed.toLowerCase())
       ? `<mark>${esc(label.slice(0, typed.length))}</mark><span class="rest">${esc(label.slice(typed.length))}</span>`
       : esc(label);
-    return `<li><button class="list-row" type="button" data-run="${esc(label)}"><span class="list-row__icon">${icon("search", 16)}</span><span class="list-row__label">${shown}</span>${icon("upright", 16)}</button></li>`;
+    const hot = /crystal cave/i.test(label) ? `<span class="urgency">${icon("flame", 14)}<span>2 left today</span></span>` : "";
+    return `<li><button class="list-row" type="button" data-run="${esc(label)}"><span class="list-row__icon">${icon("search", 16)}</span><span class="list-row__label">${shown}</span>${hot}${icon("upright", 16)}</button></li>`;
   };
   const pageRow = (e) => `<li><a class="list-row" href="${esc(e.href)}"><span class="list-row__icon">${icon(iconFor(e), 16)}</span><span class="list-row__label">${esc(e.title)}</span>${icon("right", 16)}</a></li>`;
 
   function renderIdle() {
     view.innerHTML = `<section class="search-group">
+        <p class="search-suggest__label">Trending now</p>
+        <div class="suggest-chips">${TRENDING.map(([l, hot]) => `<button class="suggest-chip${hot ? " suggest-chip--hot" : ""}" type="button" data-run="${esc(l)}">${icon(hot ? "flame" : "search", 14)}${esc(l)}</button>`).join("")}</div>
+      </section>
+      <section class="search-group">
         <header class="section-header"><p class="eyebrow">Need ideas?</p><h2 class="section-title">Suggested searches</h2></header>
         ${listCard(SUGGESTED.map((s) => suggestionRow(s)))}
       </section>`;
@@ -147,10 +167,11 @@
         <article class="card result">
           <p class="result__meta"><span class="result__icon">${icon(iconFor(e))}</span>${esc(e.type)} · ${esc(e.loc)}</p>
           <h3 class="card__title">${esc(e.title)}</h3>
+          ${e.urgency ? `<span class="urgency">${icon("flame", 14)}<span>${esc(e.urgency)}</span></span>` : ""}
           <p class="card__desc">${esc(e.desc)}</p>
           <a class="inset-row" href="${esc(e.href)}"><span>View ${esc(e.title)}</span>${icon("right")}</a>
         </article>`).join("")}</div>`
-        : `<p class="page-desc">No results match these filters. Clear a filter to see more.</p>`}`;
+        : `<p class="page-desc">Clear a filter to see more results for ${quote(state.q)}.</p>`}`;
   }
 
   function renderEmpty() {
@@ -160,8 +181,8 @@
           ${[52, 42, 33, 24, 15].map((r, i) => `<circle cx="60" cy="60" r="${r}" fill="none" stroke="#B5582F" stroke-opacity="${0.55 - i * 0.07}" stroke-width="${i === 1 ? 2 : 1.2}"/>`).join("")}
           <circle cx="60" cy="60" r="7" fill="#B5582F"/>
         </svg>
-        <h2 class="results-title">No results for ${quote(state.q)}</h2>
-        <p class="page-desc">Try a different phrase or explore these related topics.</p>
+        <h2 class="results-title">Here's what's close to ${quote(state.q)}</h2>
+        <p class="page-desc">Try a different phrase, or explore these related topics.</p>
       </div>
       <section class="search-group">
         <header class="section-header"><p class="eyebrow">Related topics</p></header>
