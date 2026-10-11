@@ -45,7 +45,8 @@ export const LINKS = {
   "Giant Forest": "giant-forest.html",
   "Explore Giant Forest": "giant-forest.html",
   "Giant Forest access details": "giant-forest.html#getting-here",
-  "Nearby Trails": "giant-forest.html#trails-walks",
+  "Nearby Trails": "giant-forest.html#trails-and-hikes",
+  "Trails & Hikes": "giant-forest.html#trails-and-hikes",
   "General Sherman Tree": "general-sherman-tree.html",
   "View General Sherman": "general-sherman-tree.html",
   "View General Sherman’s accessible approach": "general-sherman-tree.html#accessible-approach",
@@ -208,10 +209,10 @@ export const PAGES = [
     sections: [
       { t: "hero", img: IMG.mist, eyebrow: "Grove · Giant Forest · Sequoia National Park", title: "Giant Forest", desc: "Explore General Sherman and nearby sequoia trails. Use the arrival and access information to plan your time in the grove." },
       { t: "feature", eyebrow: "Featured landmark", img: IMG.sherman, title: "General Sherman Tree", desc: "Learn about the landmark and compare walking approaches.", cta: "View General Sherman" },
-      { t: "rows", eyebrow: "Things to do", title: "Trails & Walks", items: [
+      { t: "rows", eyebrow: "Things to do", title: "Trails & Hikes", items: [
         { label: "Congress Trail", level: 2, meta: "2.7 mi loop · Paved" },
         { label: "Big Trees Trail", level: 1, meta: "0.75 mi loop · Accessible" },
-        "All Trails & Walks",
+        "All Trails & Hikes",
       ] },
       { t: "facts", outer: "Getting here", title: "Getting Here", fields: [
         ["Arrival and parking information", "Main Sherman Tree lot off Wolverton Road, 2 mi north of Giant Forest Museum. Summer lots fill early; free shuttles run late May–early September."],
