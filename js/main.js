@@ -11,6 +11,11 @@
     img.addEventListener("error", hide);
   });
 
+  /* ---------- Let preview.html know the page loaded ---------- */
+  if (window.parent !== window) {
+    try { window.parent.postMessage({ type: "sequoia-site-ready" }, "*"); } catch {}
+  }
+
   /* ---------- Search (no results page yet) ---------- */
   document.querySelector("form.search")?.addEventListener("submit", (e) => e.preventDefault());
 

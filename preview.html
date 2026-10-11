@@ -216,14 +216,15 @@
       });
       window.addEventListener("resize", layout);
 
-      // If the site can't be framed here, say so instead of showing a blank device.
-      frame.addEventListener("load", () => {
-        let ok = false;
-        try { ok = !!frame.contentDocument.querySelector(".site-header"); } catch {}
-        if (!ok) {
-          stage.innerHTML = '<p class="notice">The site couldn\'t load inside this preview. Open <strong>index.html</strong> directly, or run the preview from the project folder with <strong>python3 -m http.server</strong>.</p>';
-        }
+      // The site posts a "ready" message when it loads (works even in sandboxed viewers).
+      // If it never arrives, leave the frame in place and add a short note.
+      let ready = false;
+      window.addEventListener("message", (e) => {
+        if (e.source === frame.contentWindow && e.data && e.data.type === "sequoia-site-ready") ready = true;
       });
+      setTimeout(() => {
+        if (!ready) caption.textContent += " · If the page stays blank, open preview.html from the project folder.";
+      }, 6000);
 
       setMode(mode, false);
     })();
