@@ -1,5 +1,6 @@
 // Site content, taken from the hi-fi screens in the Figma file
-// (page "5 - Initial Wireframes", frames named "HI-FI · …").
+// (page "6 - Initial Wireframes", frames named "HI-FI · …", and
+// page "7 - Prototyped Wireframes", frames named "PROTOTYPE · …").
 // Practical facts come from nps.gov/seki. scripts/build-pages.mjs renders this.
 
 /* ---------------------------------------------------------------

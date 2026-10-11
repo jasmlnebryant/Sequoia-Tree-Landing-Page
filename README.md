@@ -16,10 +16,12 @@ The full process lives in the Figma file, one page per stage:
 2. **Card sorting**
 3. **Information architecture, taxonomy & metadata**
 4. **Sitemap**
-5. **Initial wireframes** — 19 mobile screens plus desktop home
-6. **User testing**
-7. **Revised wireframes**
-8. **Visual direction explorations** — five rounds iterating from three distinct directions to the final system
+5. **Visual direction explorations** — five rounds iterating from three distinct directions to the final system
+6. **Initial wireframes** — 19 mobile screens plus desktop home
+7. **Prototyped wireframes** — the clickable prototype, with tickets & timed tours, language, nearby places, visitor posts and a sticky header
+8. **User testing**
+9. **Revised wireframes** — changes after user testing
+10. **Code export** — photos for the coded site
 
 📐 [View the Figma file](https://www.figma.com/design/5QRgraGpPxRSA0uwQegd6D/landing-page)
 
@@ -80,9 +82,9 @@ I directed the design decisions; Claude generated options and did the heavy lift
 | People & History | `people-and-history.html` | 11 |
 | Search (entry, autocomplete, results, filters, no results) | `search.html` | 12–17, 19 |
 | Accessible Trails & Routes | `accessible-trails.html` | 18 |
-| Tickets & Tours (passes, timed tours, free programs, day plans) | `tickets-and-tours.html` | 20 (revised) |
-| Crystal Cave: choose a date, time and tickets | `crystal-cave.html` | 21 (revised) |
-| Tour checkout handoff | `tour-checkout.html` | 24 (revised) |
+| Tickets & Tours (passes, timed tours, free programs, day plans) | `tickets-and-tours.html` | 20 (prototyped) |
+| Crystal Cave: choose a date, time and tickets | `crystal-cave.html` | 21 (prototyped) |
+| Tour checkout handoff | `tour-checkout.html` | 24 (prototyped) |
 
 Try searching for **tickets**, **wheelchair access** or **tree elevator** to see the search states.
 
