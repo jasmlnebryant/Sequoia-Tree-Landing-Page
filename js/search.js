@@ -27,6 +27,8 @@
       kw: "ticket tickets today hours open opening seasons season winter summer snow roads closures time" },
     { title: "Accessible Trails & Routes", desc: "Compare surfaces, steps and route details to plan for your access needs. Paved options include the Big Trees Trail and the Sherman Tree accessible trail.", type: VI, loc: "Park-wide", href: "accessible-trails.html",
       kw: "wheelchair access accessible accessibility trails trail routes route paved mobility step-free" },
+    { title: "General Sherman Tree", desc: "The largest tree on Earth by volume, with approach, parking and seasonal information.", type: "Landmark", loc: "Giant Forest", href: "general-sherman-tree.html",
+      kw: "general sherman tree largest parking landmark sequoia" },
     { title: "General Sherman: Accessible Approach", desc: "Review the approach to the landmark, including parking and route features. Paved, about 500 ft from the accessible lot on the Generals Highway.", type: "Landmark", loc: "Giant Forest", href: "general-sherman-tree.html#accessible-approach",
       kw: "wheelchair access accessible general sherman parking landmark tree approach" },
     { title: "Parking & Mobility Support", desc: "Find parking and mobility planning information before choosing an arrival point. Free temporary placards at visitor centers; summer shuttles are wheelchair-accessible.", type: VI, loc: "Park-wide", href: "#",
@@ -41,8 +43,6 @@
       kw: "trail trails general grant tree walk paved" },
     { title: "Giant Forest", desc: "Explore General Sherman and nearby sequoia trails.", type: "Grove", loc: "Giant Forest", href: "giant-forest.html",
       kw: "giant forest grove sherman trees sequoia" },
-    { title: "General Sherman Tree", desc: "The largest tree on Earth by volume, with approach, parking and seasonal information.", type: "Landmark", loc: "Giant Forest", href: "general-sherman-tree.html",
-      kw: "general sherman tree largest parking landmark sequoia" },
     { title: "Compare Groves", desc: "Compare the landmarks and planning information for Giant Forest and Grant Grove.", type: "Grove", loc: "Park-wide", href: "compare-groves.html",
       kw: "compare groves grove giant grant forest" },
     { title: "Why the Sequoias Matter", desc: "Discover the ecology, conservation, and human history of the sequoia groves.", type: "Learning", loc: "Park-wide", href: "about-the-sequoias.html",
@@ -61,24 +61,41 @@
       kw: "language languages translation spanish espanol french german italian chinese braille international" },
     { title: "Park Shuttles", desc: "Free seasonal shuttles link Giant Forest stops; the Sequoia Shuttle from Visalia needs a reservation.", type: VI, loc: "Giant Forest", href: "#",
       kw: "shuttle shuttles bus times schedule transit visalia free route moro sherman" },
+    { title: "Pets & Visitor Guidelines", desc: "Leashed pets (6 ft leash or shorter) are welcome in parking lots, on paved roads, in campgrounds and picnic areas. Park trails stay pet-free; service dogs may go anywhere. Leashed pets can use trails in the surrounding national forest.", type: VI, loc: "Park-wide", href: "#",
+      kw: "pets pet dogs dog trails trail leash service animal rules guidelines safety allowed" },
     { title: "Plan Your Visit", desc: "Fees, hours, directions, accessibility and safety in one place.", type: VI, loc: "Park-wide", href: "plan-your-visit.html",
       kw: "plan visit trip planning essentials" },
   ];
-  ENTRIES.forEach((e) => { e.words = (e.title + " " + e.kw).toLowerCase().split(/[^a-z0-9-]+/).filter(Boolean); });
+  ENTRIES.forEach((e) => {
+    e.words = (e.title + " " + e.kw).toLowerCase().split(/[^a-z0-9-]+/).filter(Boolean);
+    e.titleWords = e.title.toLowerCase().split(/[^a-z0-9-]+/).filter(Boolean);
+  });
 
   const TRENDING = [["Crystal Cave tickets", true], ["Hours today", false], ["Shuttle times", false], ["Parking at Sherman", false]];
   const SUGGESTED = ["Entrance passes", "Hours and seasons", "General Sherman parking", "Wheelchair access", "Sequoia history"];
   const POOL = ["tickets", "ticket prices", "crystal cave tickets", "tours", "ranger walks", "day plans", "language", "moro rock", "food", "entrance passes", "hours and seasons", "general sherman parking", "wheelchair access",
     "accessible trails", "sequoia history", "giant forest", "grant grove", "big trees trail", "congress trail"];
   const RELATED = [["Accessible Trails & Routes", "accessible-trails.html"], ["Tickets & Tours", "tickets-and-tours.html"], ["Parking & Mobility Support", "#"], ["Visitor Help", "#"]];
-  const STOP = new Set(["and", "the", "of", "for", "to", "a", "an", "in", "at", "near"]);
-
-  const tokens = (q) => q.toLowerCase().split(/[^a-z0-9-]+/).filter((t) => t && !STOP.has(t));
-  const matches = (entry, q) => {
+  // Natural-language questions ("Where can I park near General Sherman?") are reduced
+  // to their meaningful words, and visitor words are mapped to site terms.
+  const STOP = new Set(("and the of for to a an in at on near by with or is are am be was can could i im i'm me my we our you your " +
+    "it its do does did what whats when where wheres which who why how there here any some get go going take bring " +
+    "need want should would will today tomorrow now please find about into inside").split(" "));
+  const SYN = { dog: "pets", dogs: "pets", pet: "pets", close: "hours", closes: "hours", closing: "hours", open: "hours", opens: "hours",
+    opening: "hours", kids: "kids", children: "kids", child: "kids", admission: "tickets", entry: "passes", stroller: "accessible",
+    monument: "landmark", landmarks: "landmark", eat: "food", restaurant: "food", lunch: "food", bus: "shuttle", spanish: "language", translate: "language" };
+  const tokens = (q) => q.toLowerCase().replace(/[’']/g, "").split(/[^a-z0-9-]+/).filter((t) => t && !STOP.has(t)).map((t) => SYN[t] || t);
+  // Short queries must match every word; longer questions may miss one.
+  const score = (entry, ts) => ts.filter((t) => entry.words.some((w) => w.startsWith(t))).length;
+  const needed = (n) => (n <= 2 ? n : n - 1);
+  const matches = (entry, q) => { const ts = tokens(q); return ts.length > 0 && score(entry, ts) >= needed(ts.length); };
+  const search = (q, f) => {
     const ts = tokens(q);
-    return ts.length > 0 && ts.every((t) => entry.words.some((w) => w.startsWith(t)));
+    return ENTRIES.map((e, i) => ({ e, i, s: ts.length ? score(e, ts) : 0, t: ts.filter((x) => e.titleWords.some((w) => w.startsWith(x))).length }))
+      .filter(({ e, s }) => ts.length > 0 && s >= needed(ts.length) && (!f.loc || e.loc === f.loc) && (!f.type || e.type === f.type))
+      .sort((a, b) => b.s - a.s || b.t - a.t || a.i - b.i)   // best match, then title matches, then intent priority (index order)
+      .map(({ e }) => e);
   };
-  const search = (q, f) => ENTRIES.filter((e) => matches(e, q) && (!f.loc || e.loc === f.loc) && (!f.type || e.type === f.type));
 
   /* ---------- State ---------- */
   const state = {
@@ -129,7 +146,7 @@
   function renderTyping(q) {
     const words = q.toLowerCase();
     const sugg = POOL.filter((s) => s.startsWith(words) || s.split(" ").some((w) => w.startsWith(words))).slice(0, 4);
-    const pages = ENTRIES.filter((e) => matches(e, q)).slice(0, 3);
+    const pages = search(q, {}).slice(0, 3);
     view.innerHTML = `
       ${sugg.length ? `<section class="search-group"><h2 class="section-title section-title--sm">Suggested searches</h2>${listCard(sugg.map((s) => suggestionRow(s, q)))}</section>` : ""}
       ${pages.length ? `<section class="search-group"><h2 class="section-title section-title--sm">Suggested pages</h2>${listCard(pages.map(pageRow))}</section>` : ""}
