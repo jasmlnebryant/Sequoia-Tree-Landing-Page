@@ -188,9 +188,9 @@ function sectionHead({ eyebrow, title, desc }, bg, level = 2) {
         </header>`;
 }
 
-const btnPrimary = (label, bg, ic = "right") => DARK.has(bg)
-  ? `<a class="btn btn--cream-pill" href="#"><span>${esc(label)}</span><span class="circle circle--clay circle--42" aria-hidden="true">${icon(ic, 18)}</span></a>`
-  : `<a class="btn btn--clay-pill" href="#"><span>${esc(label)}</span><span class="circle circle--cream circle--42" aria-hidden="true">${icon(ic, 18)}</span></a>`;
+// One primary button style everywhere (burnt orange), after user testing.
+const btnPrimary = (label, bg, ic = "right") =>
+  `<a class="btn btn--clay-pill" href="#"><span>${esc(label)}</span><span class="circle circle--cream circle--42" aria-hidden="true">${icon(ic, 18)}</span></a>`;
 const btnSecondary = (label, bg, ic = "right", left = false) =>
   `<a class="btn ${DARK.has(bg) ? "btn--outline-light" : "btn--outline"}" href="#">${left ? icon(ic, 18) : ""}<span>${esc(label)}</span>${left ? "" : icon(ic, 18)}</a>`;
 
@@ -316,7 +316,7 @@ ${b.items.map((it) => {
         ${b.secondary ? btnSecondary(b.secondary, b.bg) : ""}
       </div>`,
 
-  ctas: (b) => `${b.eyebrow ? sectionHead({ eyebrow: b.eyebrow }, b.bg) : ""}
+  ctas: (b) => `${b.eyebrow || b.desc ? sectionHead({ eyebrow: b.eyebrow, desc: b.desc }, b.bg) : ""}
       <div class="actions">
         ${btnPrimary(b.primary, b.bg, b.primaryIcon)}
         ${b.secondary ? btnSecondary(b.secondary, b.bg, b.secondaryIcon, b.secondaryLeft) : ""}
@@ -383,6 +383,7 @@ ${b.items.map(([ic, t]) => `        <li><span class="tips__icon">${icon(ic, 18)}
         <section class="card booking-step" aria-labelledby="step-time">
           <div class="step-head"><h2 class="step-label" id="step-time">2 · Choose a time</h2><span class="urgency" data-urgency hidden>${icon("flame", 14)}<span></span></span></div>
           <div class="slot-grid" role="radiogroup" aria-labelledby="step-time" data-slots></div>
+          <p class="selected-line" data-selected-line aria-live="polite"></p>
         </section>
         <section class="card booking-step" aria-labelledby="step-qty">
           <h2 class="step-label" id="step-qty">3 · Tickets</h2>
@@ -396,9 +397,14 @@ ${b.items.map(([ic, t]) => `        <li><span class="tips__icon">${icon(ic, 18)}
 
   summary: (b) => `<div class="summary-card" data-booking-summary>
         <div class="summary-card__row"><div><p class="summary-card__when" data-summary-when>Choose a time</p><p class="summary-card__what" data-summary-what>2 adult tickets</p></div><p class="summary-card__total" data-summary-total>$44</p></div>
-        <a class="btn btn--cream-pill btn--full" href="tour-checkout.html" data-checkout><span>Continue to secure checkout</span><span class="circle circle--clay circle--42" aria-hidden="true">${icon("right", 18)}</span></a>
+        <a class="btn btn--clay-pill btn--full" href="tour-checkout.html" data-checkout><span>Continue to secure checkout</span><span class="circle circle--cream circle--42" aria-hidden="true">${icon("right", 18)}</span></a>
       </div>
       ${b.trust ? trustNote(b.trust) : ""}`,
+
+  progress: (b) => `<div class="progress" aria-label="Booking progress">
+        <ol class="progress__bars">${b.steps.map((_, i) => `<li class="${i < b.current ? "is-done" : ""}"></li>`).join("")}</ol>
+        <p class="progress__label">${b.steps.map((st, i) => `<span${i + 1 === b.current ? ' aria-current="step"' : ""}>Step ${i + 1} · ${esc(st)}</span>`).join(`<span aria-hidden="true">→</span>`)}</p>
+      </div>`,
 
   readout: (b) => `<p class="booking-readout" data-booking-readout>${icon("ticket", 18)}<span>${esc(b.text)}</span></p>`,
 

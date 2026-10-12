@@ -55,7 +55,14 @@ export const LINKS = {
 
   // Learn
   "About the Sequoias": "about-the-sequoias.html",
+  "Why sequoias matter": "about-the-sequoias.html",
+  "Why they matter": "about-the-sequoias.html",
   "People & History": "people-and-history.html",
+
+  // Visitor help
+  "Safety & Visitor Guidelines": "safety-and-visitor-guidelines.html",
+  "Search again": "search.html",
+  "Find trails & routes": "accessible-trails.html",
 
   // Official sources (external)
   "Official NPS Sources": "https://www.nps.gov/seki/",
@@ -209,6 +216,7 @@ export const PAGES = [
     sections: [
       { t: "hero", img: IMG.mist, eyebrow: "Grove · Giant Forest · Sequoia National Park", title: "Giant Forest", desc: "Explore General Sherman and nearby sequoia trails. Use the arrival and access information to plan your time in the grove." },
       { t: "feature", eyebrow: "Featured landmark", img: IMG.sherman, title: "General Sherman Tree", desc: "Learn about the landmark and compare walking approaches.", cta: "View General Sherman" },
+      { t: "rows", bg: "bark", eyebrow: "Why it matters", title: "History of this grove", desc: "Giant Forest is home to General Sherman, the largest tree on Earth by volume, and has been protected since Sequoia became a national park in 1890.", items: ["People & History", "Why sequoias matter"] },
       { t: "rows", eyebrow: "Things to do", title: "Trails & Hikes", items: [
         { label: "Congress Trail", level: 2, meta: "2.7 mi loop · Paved" },
         { label: "Big Trees Trail", level: 1, meta: "0.75 mi loop · Accessible" },
@@ -350,6 +358,25 @@ export const PAGES = [
     ],
   },
 
+  /* ---------- Visitor help ---------- */
+  {
+    file: "safety-and-visitor-guidelines.html", nav: "plan", title: "Safety & Visitor Guidelines",
+    description: "Where pets can go, food storage and wildlife rules for Sequoia & Kings Canyon.",
+    sections: [
+      { t: "intro", crumbs: ["Home", "Plan Your Visit"], eyebrow: "Visitor help", title: "Safety & Visitor Guidelines", desc: "Quick answers to the rules visitors ask about most." },
+      { t: "facts", title: "Pets & dogs", fields: [
+        ["On trails", "Not allowed, even on a leash"],
+        ["Where pets can go", "On a leash (6 ft max) in campgrounds, picnic areas, parking lots and along paved roads"],
+        ["Service animals", "Welcome anywhere visitors can go"],
+      ] },
+      { t: "facts", title: "Other visitor rules", desc: "A few reminders that keep people and wildlife safe.", fields: [
+        ["Food storage", "Use the metal food-storage boxes at trailheads and campgrounds. Don't leave food in your car."],
+        ["Wildlife", "Give animals plenty of space and never feed them."],
+      ] },
+      { t: "ctas", bg: "bark", eyebrow: "Still not sure?", desc: "Rules can change with conditions. Call the park at (559) 565-3341.", primary: "Search again", primaryIcon: "search", secondary: "Find trails & routes" },
+    ],
+  },
+
   /* ---------- Tickets, tours and booking ---------- */
   {
     file: "tickets-and-tours.html", nav: "plan", title: "Tickets & Tours",
@@ -379,6 +406,7 @@ export const PAGES = [
     description: "Choose a date, time and tickets for a Crystal Cave guided tour.", scripts: ["js/booking.js"],
     sections: [
       { t: "intro", crumbs: ["Tickets & Tours"], eyebrow: "Timed tour · Sequoia Parks Conservancy", title: "Crystal Cave Tour" },
+      { t: "progress", current: 1, steps: ["Choose your tour", "Secure checkout"] },
       { t: "booking", adult: 22, child: 11, meta: [["clock", "50 min tour"], ["route", "½-mile loop inside"], ["leaf", "About 50°F in the cave"], ["nav", "Steep ½-mile walk to the entrance"]] },
       { t: "tips", bg: "paper", eyebrow: "Before you book", title: "Good to know", items: [
         ["leaf", "Bring a jacket — the cave stays about 50°F."],
@@ -386,7 +414,7 @@ export const PAGES = [
         ["car", "Crystal Cave Road fits vehicles up to 22 ft, trailer included."],
         ["cal", "Book at least 36 hours ahead; tickets sell online only."],
       ] },
-      { t: "summary", bg: "paper", trust: "Secure checkout by Sequoia Parks Conservancy, the park's official nonprofit partner. Ticket sales fund park education and restoration." },
+      { t: "summary", bg: "paper", trust: "Step 2 of 2: you'll finish paying on the secure checkout of Sequoia Parks Conservancy, the park's official nonprofit partner. Ticket sales fund park education and restoration." },
     ],
   },
   {
@@ -394,6 +422,7 @@ export const PAGES = [
     description: "Leave this site to pay for Crystal Cave tickets with Sequoia Parks Conservancy.", scripts: ["js/booking.js"],
     sections: [
       { t: "intro", eyebrow: "Leaving this site", title: "Finish booking with the official seller", desc: "Payment happens on the Sequoia Parks Conservancy site." },
+      { t: "progress", current: 2, steps: ["Choose your tour", "Secure checkout"] },
       { t: "readout", text: "Sat, Jul 18 · 11:00 AM · 2 adult tickets · $44" },
       { t: "facts", fields: [["Official ticket seller", "Sequoia Parks Conservancy — the park's official nonprofit partner. Ticket sales fund education and restoration."]] },
       { t: "ctas", primary: "Open secure checkout", primaryIcon: "ext", secondary: "Back to Crystal Cave", secondaryIcon: "left", secondaryLeft: true },

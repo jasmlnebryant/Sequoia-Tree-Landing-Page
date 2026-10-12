@@ -261,8 +261,14 @@
     hero.querySelector("[data-hero-next]").addEventListener("click", () => { stop(); show(index + 1); });
     dots.forEach((d, n) => d.addEventListener("click", () => { stop(); show(n); }));
 
+    // Swipe (touch) or drag (mouse) to change slides; taps on buttons and links still work
     let startX = null;
-    hero.addEventListener("pointerdown", (e) => { if (e.pointerType !== "mouse") startX = e.clientX; });
+    hero.addEventListener("pointerdown", (e) => {
+      if (e.target.closest("button, a")) return;
+      if (e.pointerType === "mouse") e.preventDefault(); // stop the browser dragging the photo
+      startX = e.clientX;
+    });
+    hero.addEventListener("pointercancel", () => { startX = null; });
     hero.addEventListener("pointerup", (e) => {
       if (startX === null) return;
       const dx = e.clientX - startX;
@@ -277,6 +283,19 @@
     hero.addEventListener("mouseleave", start);
     hero.addEventListener("focusin", stop);
     start();
+  }
+
+  /* ---------- Sticky search bar (home): shows once the page search scrolls away ---------- */
+  const sticky = document.querySelector("[data-sticky-search]");
+  const pageSearch = document.getElementById("search");
+  if (sticky && pageSearch && "IntersectionObserver" in window) {
+    const field = sticky.querySelector("a");
+    new IntersectionObserver(([entry]) => {
+      const show = !entry.isIntersecting && entry.boundingClientRect.top < 0;
+      sticky.classList.toggle("is-visible", show);
+      sticky.setAttribute("aria-hidden", String(!show));
+      field.tabIndex = show ? 0 : -1;
+    }).observe(pageSearch);
   }
 
   /* ---------- Grove carousel (home, scroll-snap) ---------- */

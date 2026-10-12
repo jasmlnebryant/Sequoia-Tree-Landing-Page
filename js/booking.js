@@ -60,7 +60,7 @@
     slotsEl.innerHTML = TIMES.map((t, i) => {
       const n = left[i];
       return `<button class="slot-btn" type="button" role="radio" aria-checked="${i === state.time}" tabindex="${i === state.time ? 0 : -1}" data-time="${i}"${n === 0 ? " disabled" : ""} aria-label="${t}, ${statusFor(n)}">
-        <span class="slot-btn__time">${t}</span><span class="slot-btn__status${n > 0 && n < 5 ? " is-low" : ""}">${statusFor(n)}</span></button>`;
+        <span class="slot-btn__time">${t}</span><span class="slot-btn__status${n > 0 && n < 5 ? " is-low" : ""}">${i === state.time ? `${icon("yes", 12)} Selected` : statusFor(n)}</span></button>`;
     }).join("");
     // Urgency badge: the scarcest open time that day
     let low = -1;
@@ -89,8 +89,11 @@
       noteEl.hidden = true;
     }
 
-    if (!summary) return;
     const d = DATES[state.date], t = TIMES[state.time];
+    // Say plainly which time is picked (user testing: P2 missed the preselected time)
+    const selLine = root.querySelector("[data-selected-line]");
+    if (selLine) selLine.textContent = `Selected: ${d.label} · ${t}. Tap another time to change it.`;
+    if (!summary) return;
     const parts = [];
     if (state.qty.adult) parts.push(`${state.qty.adult} adult${state.qty.adult > 1 ? "s" : ""}`);
     if (state.qty.child) parts.push(`${state.qty.child} child${state.qty.child > 1 ? "ren" : ""}`);

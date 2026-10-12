@@ -60,6 +60,7 @@ I directed the design decisions; Claude generated options and did the heavy lift
 - [x] Make it responsive up to the desktop layout
 - [x] Add the photo and grove carousels
 - [x] Build the hi-fi pages from Figma and link them together
+- [x] Apply the user-testing revisions (Figma page 9 "Revised Wireframes"): history links from the hero and Giant Forest, a Safety & Visitor Guidelines page that answers the pets question, today's hours in the park status card, clearer Crystal Cave booking steps, one burnt-orange button style, a swipeable hero and a sticky search bar on Home
 - [ ] Add the four photos to `assets/img/` (see the note there)
 - [ ] Design and build the remaining pages (Grant Grove, Directions, Current Conditions, Visitor Help…)
 - [ ] Publish with GitHub Pages
@@ -82,6 +83,7 @@ I directed the design decisions; Claude generated options and did the heavy lift
 | People & History | `people-and-history.html` | 11 |
 | Search (entry, autocomplete, results, filters, no results) | `search.html` | 12–17, 19 |
 | Accessible Trails & Routes | `accessible-trails.html` | 18 |
+| Safety & Visitor Guidelines (pets answer) | `safety-and-visitor-guidelines.html` | 25 (revised, page 9) |
 | Tickets & Tours (passes, timed tours, free programs, day plans) | `tickets-and-tours.html` | 20 (prototyped) |
 | Crystal Cave: choose a date, time and tickets | `crystal-cave.html` | 21 (prototyped) |
 | Tour checkout handoff | `tour-checkout.html` | 24 (prototyped) |

@@ -46,7 +46,7 @@
     { title: "Compare Groves", desc: "Compare the landmarks and planning information for Giant Forest and Grant Grove.", type: "Grove", loc: "Park-wide", href: "compare-groves.html",
       kw: "compare groves grove giant grant forest" },
     { title: "Why the Sequoias Matter", desc: "Discover the ecology, conservation, and human history of the sequoia groves.", type: "Learning", loc: "Park-wide", href: "about-the-sequoias.html",
-      kw: "sequoia sequoias about ecology fire climate conservation history facts" },
+      kw: "sequoia sequoias about ecology fire climate conservation history historic historical facts matter significant significance important why" },
     { title: "People & History", desc: "Indigenous connections, the protection of the groves and the history of the parks.", type: "Learning", loc: "Park-wide", href: "people-and-history.html",
       kw: "sequoia history people indigenous protection soldiers park" },
     { title: "Ranger Walks & Junior Ranger", desc: "Free ranger walks and talks, plus the Junior Ranger booklet at any visitor center.", type: "Tour", loc: "Park-wide", href: "tickets-and-tours.html#free-programs",
@@ -61,7 +61,7 @@
       kw: "language languages translation spanish espanol french german italian chinese braille international" },
     { title: "Park Shuttles", desc: "Free seasonal shuttles link Giant Forest stops; the Sequoia Shuttle from Visalia needs a reservation.", type: VI, loc: "Giant Forest", href: "#",
       kw: "shuttle shuttles bus times schedule transit visalia free route moro sherman" },
-    { title: "Pets & Visitor Guidelines", desc: "Leashed pets (6 ft leash or shorter) are welcome in parking lots, on paved roads, in campgrounds and picnic areas. Park trails stay pet-free; service dogs may go anywhere. Leashed pets can use trails in the surrounding national forest.", type: VI, loc: "Park-wide", href: "#",
+    { title: "Pets & Visitor Guidelines", desc: "Leashed pets (6 ft leash or shorter) are welcome in parking lots, on paved roads, in campgrounds and picnic areas. Park trails stay pet-free; service dogs may go anywhere. Leashed pets can use trails in the surrounding national forest.", type: VI, loc: "Park-wide", href: "safety-and-visitor-guidelines.html#pets-and-dogs",
       kw: "pets pet dogs dog trails trail leash service animal rules guidelines safety allowed" },
     { title: "Plan Your Visit", desc: "Fees, hours, directions, accessibility and safety in one place.", type: VI, loc: "Park-wide", href: "plan-your-visit.html",
       kw: "plan visit trip planning essentials" },
@@ -71,11 +71,11 @@
     e.titleWords = e.title.toLowerCase().split(/[^a-z0-9-]+/).filter(Boolean);
   });
 
-  const TRENDING = [["Crystal Cave tickets", true], ["Hours today", false], ["Shuttle times", false], ["Parking at Sherman", false]];
+  const TRENDING = [["Crystal Cave tickets", true], ["Hours today", false], ["Why sequoias matter", false], ["Parking at Sherman", false]];
   const SUGGESTED = ["Entrance passes", "Hours and seasons", "General Sherman parking", "Wheelchair access", "Sequoia history"];
   const POOL = ["tickets", "ticket prices", "crystal cave tickets", "tours", "ranger walks", "day plans", "language", "moro rock", "food", "entrance passes", "hours and seasons", "general sherman parking", "wheelchair access",
     "accessible trails", "sequoia history", "giant forest", "grant grove", "big trees trail", "congress trail"];
-  const RELATED = [["Accessible Trails & Routes", "accessible-trails.html"], ["Tickets & Tours", "tickets-and-tours.html"], ["Parking & Mobility Support", "#"], ["Visitor Help", "#"]];
+  const RELATED = [["Accessible Trails & Routes", "accessible-trails.html"], ["Safety & Visitor Guidelines", "safety-and-visitor-guidelines.html"], ["Tickets & Tours", "tickets-and-tours.html"], ["Parking & Mobility Support", "#"]];
   // Natural-language questions ("Where can I park near General Sherman?") are reduced
   // to their meaningful words, and visitor words are mapped to site terms.
   const STOP = new Set(("and the of for to a an in at on near by with or is are am be was can could i im i'm me my we our you your " +
@@ -203,7 +203,7 @@
       </div>
       <section class="search-group">
         <header class="section-header"><p class="eyebrow">Related topics</p></header>
-        <ul class="nav-rows">${RELATED.map(([l, h]) => `<li><a class="nav-row" href="${h}"><span class="nav-row__icon">${icon(/access/i.test(l) ? "access" : /parking/i.test(l) ? "car" : "help", 20)}</span><span class="nav-row__text"><span class="nav-row__label">${esc(l)}</span></span><svg class="icon icon--18 nav-row__arrow" aria-hidden="true"><use href="#i-right"/></svg></a></li>`).join("")}</ul>
+        <ul class="nav-rows">${RELATED.map(([l, h]) => `<li><a class="nav-row" href="${h}"><span class="nav-row__icon">${icon(/access/i.test(l) ? "access" : /parking/i.test(l) ? "car" : /safety/i.test(l) ? "shield" : /ticket/i.test(l) ? "ticket" : "help", 20)}</span><span class="nav-row__text"><span class="nav-row__label">${esc(l)}</span></span><svg class="icon icon--18 nav-row__arrow" aria-hidden="true"><use href="#i-right"/></svg></a></li>`).join("")}</ul>
       </section>
       <div class="actions">
         <button class="btn btn--outline" type="button" data-edit-search>${icon("edit")}<span>Edit Search</span></button>

@@ -107,7 +107,7 @@
             <li><a class="menu-group__row" href="#"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-nav"/></svg></span><span>Directions &amp; Transportation</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
             <li><a class="menu-group__row" href="accessible-trails.html"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-access"/></svg></span><span>Accessibility</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
             <li><a class="menu-group__row" href="#"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-food"/></svg></span><span>Food &amp; Places to Stay</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
-            <li><a class="menu-group__row" href="#"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-shield"/></svg></span><span>Safety &amp; Visitor Guidelines</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+            <li><a class="menu-group__row" href="safety-and-visitor-guidelines.html"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-shield"/></svg></span><span>Safety &amp; Visitor Guidelines</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
           </ul>
           <a class="menu-group__overview" href="plan-your-visit.html">Plan Your Visit overview<svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a>
         </div>
@@ -140,6 +140,14 @@
       </div>
       </div>
     </section>
+    <section class="block block--progress bg-sand">
+      <div class="container">
+      <div class="progress" aria-label="Booking progress">
+        <ol class="progress__bars"><li class="is-done"></li><li class=""></li></ol>
+        <p class="progress__label"><span aria-current="step">Step 1 · Choose your tour</span><span aria-hidden="true">→</span><span>Step 2 · Secure checkout</span></p>
+      </div>
+      </div>
+    </section>
     <section class="block block--booking bg-sand">
       <div class="container">
       <div class="booking" data-booking data-price-adult="22" data-price-child="11">
@@ -152,6 +160,7 @@
         <section class="card booking-step" aria-labelledby="step-time">
           <div class="step-head"><h2 class="step-label" id="step-time">2 · Choose a time</h2><span class="urgency" data-urgency hidden><svg class="icon icon--14" aria-hidden="true"><use href="#i-flame"/></svg><span></span></span></div>
           <div class="slot-grid" role="radiogroup" aria-labelledby="step-time" data-slots></div>
+          <p class="selected-line" data-selected-line aria-live="polite"></p>
         </section>
         <section class="card booking-step" aria-labelledby="step-qty">
           <h2 class="step-label" id="step-qty">3 · Tickets</h2>
@@ -189,9 +198,9 @@
       <div class="container">
       <div class="summary-card" data-booking-summary>
         <div class="summary-card__row"><div><p class="summary-card__when" data-summary-when>Choose a time</p><p class="summary-card__what" data-summary-what>2 adult tickets</p></div><p class="summary-card__total" data-summary-total>$44</p></div>
-        <a class="btn btn--cream-pill btn--full" href="tour-checkout.html" data-checkout><span>Continue to secure checkout</span><span class="circle circle--clay circle--42" aria-hidden="true"><svg class="icon icon--18" aria-hidden="true"><use href="#i-right"/></svg></span></a>
+        <a class="btn btn--clay-pill btn--full" href="tour-checkout.html" data-checkout><span>Continue to secure checkout</span><span class="circle circle--cream circle--42" aria-hidden="true"><svg class="icon icon--18" aria-hidden="true"><use href="#i-right"/></svg></span></a>
       </div>
-      <p class="trust-note"><svg class="icon icon--20" aria-hidden="true"><use href="#i-shield"/></svg><span>Secure checkout by Sequoia Parks Conservancy, the park's official nonprofit partner. Ticket sales fund park education and restoration.</span></p>
+      <p class="trust-note"><svg class="icon icon--20" aria-hidden="true"><use href="#i-shield"/></svg><span>Step 2 of 2: you'll finish paying on the secure checkout of Sequoia Parks Conservancy, the park's official nonprofit partner. Ticket sales fund park education and restoration.</span></p>
       </div>
     </section>
   </main>

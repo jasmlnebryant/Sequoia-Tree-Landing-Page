@@ -106,7 +106,7 @@
             <li><a class="menu-group__row" href="#"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-nav"/></svg></span><span>Directions &amp; Transportation</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
             <li><a class="menu-group__row" href="accessible-trails.html"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-access"/></svg></span><span>Accessibility</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
             <li><a class="menu-group__row" href="#"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-food"/></svg></span><span>Food &amp; Places to Stay</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
-            <li><a class="menu-group__row" href="#"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-shield"/></svg></span><span>Safety &amp; Visitor Guidelines</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
+            <li><a class="menu-group__row" href="safety-and-visitor-guidelines.html"><span class="menu-group__icon"><svg class="icon icon--18" aria-hidden="true"><use href="#i-shield"/></svg></span><span>Safety &amp; Visitor Guidelines</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a></li>
           </ul>
           <a class="menu-group__overview" href="plan-your-visit.html">Plan Your Visit overview<svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a>
         </div>
@@ -128,15 +128,22 @@
   </header>
   <!-- /build:header -->
 
+  <!-- Sticky search: slides in once the page search scrolls out of view -->
+  <div class="sticky-search" data-sticky-search aria-hidden="true">
+    <div class="container">
+      <a class="sticky-search__field" href="search.html" tabindex="-1"><svg class="icon icon--18" aria-hidden="true"><use href="#i-search"/></svg><span>Search trees, trails, passes, accessibility…</span></a>
+    </div>
+  </div>
+
   <main id="main">
     <!-- Hero: conditions, photo carousel, intro -->
     <section class="home-hero" aria-label="Welcome">
       <div class="container home-hero__grid">
         <div class="home-hero__conditions">
-          <a class="conditions-card" href="#">
+          <a class="conditions-card" href="hours-and-seasons.html">
             <span class="conditions-card__text">
-              <span class="eyebrow eyebrow--muted"><span class="status-dot" aria-hidden="true"></span>Park status</span>
-              <span class="conditions-card__title">Check current conditions</span>
+              <span class="eyebrow eyebrow--muted"><span class="status-dot" aria-hidden="true"></span>Park status · conditions</span>
+              <span class="conditions-card__title">Open 24 hours today</span>
             </span>
             <span class="circle circle--clay circle--44" aria-hidden="true"><svg class="icon icon--18"><use href="#i-upright"/></svg></span>
           </a>
@@ -163,6 +170,7 @@
 
           <div class="hero__content">
             <h1 class="hero__title">Meet the <em>giant</em> sequoias.</h1>
+            <a class="btn btn--primary btn--sm hero__link" href="about-the-sequoias.html"><span>Why they matter</span><svg class="icon icon--16" aria-hidden="true"><use href="#i-right"/></svg></a>
             <div class="hero__controls">
               <div class="dots dots--light" role="tablist" aria-label="Choose slide" data-hero-dots>
                 <button class="dot is-active" type="button" role="tab" aria-selected="true" aria-label="Slide 1"></button>
@@ -182,9 +190,9 @@
           <p class="eyebrow eyebrow--sage intro-card__eyebrow">Sequoia &amp; Kings Canyon</p>
           <p class="intro-card__text">Explore Giant Forest and Grant Grove, discover remarkable trees, and prepare for your visit.</p>
           <div class="intro-card__actions">
-            <a class="btn btn--cream-pill" href="plan-your-visit.html">
+            <a class="btn btn--clay-pill" href="plan-your-visit.html">
               <span>Plan your visit</span>
-              <span class="circle circle--clay circle--42" aria-hidden="true"><svg class="icon icon--18"><use href="#i-upright"/></svg></span>
+              <span class="circle circle--cream circle--42" aria-hidden="true"><svg class="icon icon--18"><use href="#i-upright"/></svg></span>
             </a>
             <a class="btn btn--outline-light" href="compare-groves.html">
               <span>Compare groves</span>
@@ -207,7 +215,7 @@
           <li><a class="suggest-chip" href="hours-and-seasons.html"><svg class="icon icon--14" aria-hidden="true"><use href="#i-search"/></svg>Hours today</a></li>
           <li><a class="suggest-chip" href="search.html?q=parking"><svg class="icon icon--14" aria-hidden="true"><use href="#i-search"/></svg>Parking</a></li>
           <li><a class="suggest-chip" href="search.html?q=wheelchair%20access"><svg class="icon icon--14" aria-hidden="true"><use href="#i-search"/></svg>Wheelchair access</a></li>
-          <li><a class="suggest-chip" href="search.html?q=pets%20on%20trails"><svg class="icon icon--14" aria-hidden="true"><use href="#i-search"/></svg>Pets on trails</a></li>
+          <li><a class="suggest-chip" href="safety-and-visitor-guidelines.html#pets-and-dogs"><svg class="icon icon--14" aria-hidden="true"><use href="#i-search"/></svg>Pets on trails</a></li>
         </ul>
       </div>
     </section>
@@ -364,7 +372,7 @@
           </header>
           <div class="learn__body">
             <p class="learn__text">Discover the ecology, conservation, and human history of the sequoia groves.</p>
-            <a class="btn btn--cream" href="about-the-sequoias.html"><span>About the Sequoias</span><svg class="icon icon--18"><use href="#i-right"/></svg></a>
+            <a class="btn btn--primary" href="about-the-sequoias.html"><span>About the Sequoias</span><svg class="icon icon--18"><use href="#i-right"/></svg></a>
           </div>
         </div>
       </section>
@@ -382,7 +390,7 @@
             <li><a class="ring-row" href="#">
               <svg class="ring-marker" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="16.25" fill="none" stroke="#B5582F" stroke-width="1.5"/><circle cx="17" cy="17" r="11.75" fill="#B5582F" stroke="#B5582F" stroke-opacity=".8" stroke-width="1.5"/></svg>
               <span class="ring-row__label">Alerts &amp; Conditions</span><svg class="icon icon--18 ring-row__arrow"><use href="#i-right"/></svg></a></li>
-            <li><a class="ring-row" href="#">
+            <li><a class="ring-row" href="safety-and-visitor-guidelines.html">
               <svg class="ring-marker" viewBox="0 0 34 34" aria-hidden="true"><circle cx="17" cy="17" r="16.25" fill="none" stroke="#B5582F" stroke-width="1.5"/><circle cx="17" cy="17" r="11.75" fill="none" stroke="#B5582F" stroke-opacity=".8" stroke-width="1.5"/><circle cx="17" cy="17" r="7.25" fill="#B5582F" stroke="#B5582F" stroke-opacity=".6" stroke-width="1.5"/></svg>
               <span class="ring-row__label">Safety &amp; Visitor Guidelines</span><svg class="icon icon--18 ring-row__arrow"><use href="#i-right"/></svg></a></li>
             <li><a class="ring-row" href="#">
@@ -408,7 +416,7 @@
             <li class="post"><span class="post__photo"><svg class="icon icon--28" aria-hidden="true"><use href="#i-image"/></svg></span><span class="post__place"><svg class="icon icon--14" aria-hidden="true"><use href="#i-pin"/></svg>Crystal Cave</span><blockquote class="post__quote">“Bring a jacket — the cave stays around 50°F even in July. Totally magical inside.”</blockquote><span class="post__handle">@lens.and.lichen</span></li>
           </ul>
           <div class="actions">
-            <a class="btn btn--cream" href="#"><span>Share your visit</span><svg class="icon icon--18" aria-hidden="true"><use href="#i-camera"/></svg></a>
+            <a class="btn btn--primary" href="#"><span>Share your visit</span><svg class="icon icon--18" aria-hidden="true"><use href="#i-camera"/></svg></a>
             <a class="btn btn--outline-light" href="#"><span>See all stories</span><svg class="icon icon--18" aria-hidden="true"><use href="#i-right"/></svg></a>
           </div>
         </div>
